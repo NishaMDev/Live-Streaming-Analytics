@@ -1,5 +1,7 @@
 # Live-Streaming-Analytics
 
+Twitch API tokens are present in json file.
+
 Steps:
 
 Run the load.py to load chats in sqlite
