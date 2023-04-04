@@ -26,7 +26,7 @@ class chatSummarization:
 
             # The result of a "cursor.execute" can be iterated over by row
             # Load the data into a DataFrame
-            self.chat_df = pd.read_sql_query('SELECT message_text from chat WHERE channel_name="self.channel_name"', conn)
+            self.chat_df = pd.read_sql_query('SELECT message_text from chats WHERE channel_name="self.channel_name"', conn)
 
             # Be sure to close the connection
             conn.close()
