@@ -11,7 +11,7 @@ class chatSummarization:
         self.OPENAI_API_KEY = ""
         self.channel_name = channel_name
 
-    def readDatabse(self):
+    def readDatabase(self):
         # ************************************************************
         # Read the token       
         # ************************************************************
@@ -21,14 +21,22 @@ class chatSummarization:
             openai.api_key =  self.OPENAI_API_KEY
         # channel_name = "cdawgva"
         # Create a SQL connection to our SQLite database
-        conn = sqlite3.connect('data/chat_table.sqlite3',isolation_level=None)
+        try:
+            conn = sqlite3.connect('data/chat_table.sqlite3',isolation_level=None)
 
-        # The result of a "cursor.execute" can be iterated over by row
-        # Load the data into a DataFrame
-        self.chat_df = pd.read_sql_query('SELECT message_text from chat WHERE channel_name="self.channel_name"', conn)
+            # The result of a "cursor.execute" can be iterated over by row
+            # Load the data into a DataFrame
+            self.chat_df = pd.read_sql_query('SELECT message_text from chat WHERE channel_name="self.channel_name"', conn)
 
-        # Be sure to close the connection
-        conn.close()
+            # Be sure to close the connection
+            conn.close()
+        
+        except sqlite3.Error as error:
+            print("Failed to read data from chat table", error)
+
+        finally:
+            if conn:
+                conn.close()
 
     def summarize(self,merged_str):
         prompt= "Generate a summary of the following Twitch chat messages:" + merged_str + "Use no more than 3-4 sentences to summarize the main sentiment and topics discussed."
@@ -57,24 +65,31 @@ class chatSummarization:
     def createTable(self, data):
         # Create DataFrame  
         summary_df = pd.DataFrame(data)  
-
+        try:
         # Create your connection.
-        conn = sqlite3.connect("data/chat_summary.sqlite3")
-        
-        # Write the dataframe to sqlite
-        summary_df.to_sql("chat_summary", conn, if_exists='replace', index=False)
-        print("Dataframe written to sqlite")
+            conn = sqlite3.connect("data/chat_summary.sqlite3")
+            
+            # Write the dataframe to sqlite
+            summary_df.to_sql("chat_summary", conn, if_exists='replace', index=False)
+            print("Dataframe written to sqlite")
 
-        #Commit the change
-        conn.commit()
+            #Commit the change
+            conn.commit()
 
-        #Close the connection
-        conn.close()
+            #Close the connection
+            conn.close()
+        except sqlite3.Error as error:
+            print("Failed to create chat_summary table", error)
+
+        finally:
+            if conn:
+                conn.close()
 
 if __name__ == "__main__":
-    channel_name = sys.argv[0]
+    channel_name = sys.argv[1]
+    print("self.channel_name", channel_name)
     chatSummary = chatSummarization(channel_name)
-    chatSummary.readDatabse()
+    chatSummary.readDatabase()
     chatSummary.mergeChat()
 
 
