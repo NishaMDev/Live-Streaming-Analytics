@@ -9,6 +9,11 @@ Run the load.py to load chats in sqlite
         python load.py
 
 
-Run main.py to read chats from db and perform sentimental analysis on them and load in chat table.
+Run sentiment_analysis.py to read chats from db and perform sentimental analysis on them and load in chat table.
 
-        python main.py
+        python sentiment_analysis.py
+        
+        
+Run chat_summarization.py to read chats from db and perform chat summarization on them and load in chat summary table.
+
+        python chat_summarization.py        
