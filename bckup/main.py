@@ -9,7 +9,6 @@ import time
 import csv
 import pandas as pd
 import os
-import openai
 
 # ************************************************************
 # Read in channels to listen to from arguments.
@@ -80,9 +79,8 @@ chat_df['new_message_text'] = chat_df['message_text'].map(lambda x: utils.replac
 # print(chat_df.head(10))
 
 # ************************************************************
-# Score sentiment of chat messages.ß
+# Score sentiment of chat messages.
 # ************************************************************
-# Load model & tokenizer
 batch_size = 80
 openai.api_key =  OPENAI_API_KEY
 
@@ -96,25 +94,19 @@ chat_df['specific_sentiment'] =''
 # loop through all the rows
 for i in range(0, total_rows, batch_size):
     # get the 1000 chats from the data frame
-    chat_df_1000 = chat_df.iloc[i:i+batch_size]
-    chat_1000_list = chat_df_1000['new_message_text'].tolist()
-    # print("chat_1000_list: "+ str(chat_1000_list))
+    chat_df_batch = chat_df.iloc[i:i+batch_size]
+    chat_batch_list = chat_df_batch['new_message_text'].tolist()
+    # print("chat_batch_list: "+ str(chat_batch_list))
     
     j = 1
-    chat_1000_str=''
-    for chat in chat_1000_list:
-        chat_1000_str = chat_1000_str + str(j) +'.'+'"'+ chat +'"'+'\n'
+    chat_batch_str=''
+    for chat in chat_batch_list:
+        chat_batch_str = chat_batch_str + str(j) +'.'+'"'+ chat +'"'+'\n'
         j=j+1
 
-    # print("chat_1000_str: "+ str(chat_1000_str))
-    response_genlist = utils.general_sentiments(chat_1000_str)
-    response_spelist = utils.specific_sentiments(chat_1000_str) 
-    
-    # print("i",i)
-    # print("i+batch_size",i+batch_size)
-    # print("response_genlist",response_genlist)
-    # print("len(response_genlist)",len(response_genlist))
-    
+    response_genlist = utils.general_sentiments(chat_batch_str)
+    response_spelist = utils.specific_sentiments(chat_batch_str) 
+
     #chat_df.loc[i:i+batch_size, 'general_sentiment'] = response_genlist
     chat_df['general_sentiment'].iloc[i:i+batch_size] = response_genlist
     chat_df['specific_sentiment'].iloc[i:i+batch_size] = response_spelist
