@@ -10,9 +10,7 @@ import csv
 import pandas as pd
 import os
 
-# ************************************************************
-# Read in channels to listen to from arguments.
-# ************************************************************
+
 # parser = argparse.ArgumentParser(description='Get list of channels')
 # parser.add_argument('-l','--channels', nargs='+', help='<Required> set channels', required=True)
 
