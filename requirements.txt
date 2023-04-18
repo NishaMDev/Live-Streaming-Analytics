@@ -16,5 +16,6 @@ torch
 torchvision
 torchaudio
 pandas
-sqlite3==3.41.1
+sqlite3
 openai
+pandas
