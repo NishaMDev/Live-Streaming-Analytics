@@ -26,7 +26,7 @@ def setup_sqllite_loggers(channel_name, level=logging.INFO):
     
         logger = logging.getLogger(channel_name)
         logger.setLevel(level)
-        logger.addHandler(sqlite_handler.SQLiteHandler('data/db.sqlite3'
+        logger.addHandler(sqlite_handler.SQLiteHandler('../data/db.sqlite3'
                                                        , channel_name))
         
 #         logger = logging.getLogger('someLoggerNameLikeDebugOrWhatever')
@@ -113,7 +113,7 @@ def view_count(chatter_count):
     return viewer_count
 
 def general_sentiments(chat_1000_str):
-    prompt_general="Classify the sentiment in these tweets:\n" + chat_1000_str + "\n Tweet sentiment ratings in terms of positive , negative or neutral :"
+    prompt_general="Classify the sentiment in these tweets:\n" + chat_1000_str + "\n Tweet sentiment ratings in terms of Positive, Negative or Neutral:"
     response_general = openai.Completion.create(
                               model="text-davinci-003",
                               prompt=prompt_general,
@@ -122,12 +122,23 @@ def general_sentiments(chat_1000_str):
                               top_p=1.0,
                               frequency_penalty=0.0,
                               presence_penalty=0.0)
+    
     response_genlist = ((response_general["choices"][0]["text"]).split('\n'))[1:]
-    response_genlist = [i.strip('1234567890.') for i in response_genlist]
+    response_genlist = [i.strip('1234567890. ') for i in response_genlist]
+
+    for i in range(len(response_genlist)):
+        if response_genlist[i] == 'Positive':
+            response_genlist[i] = '1'
+        elif response_genlist[i] == 'Negative':
+            response_genlist[i] = '-1'
+        else:
+            response_genlist[i] = '0'
+   
     return response_genlist
 
 def specific_sentiments(chat_1000_str):
-    prompt_specific="Classify the sentiment in these tweets:\n" + chat_1000_str + "\n Tweet sentiment ratings :"  
+    prompt_specific="Classify the sentiment in these tweets:\n" + chat_1000_str + "\n Tweet sentiment ratings in one word :"  
+    print("prompt_specific - ",prompt_specific)
     response_specific = openai.Completion.create(
                               model="text-davinci-003",
                               prompt=prompt_specific,
@@ -137,7 +148,7 @@ def specific_sentiments(chat_1000_str):
                               frequency_penalty=0.0,
                               presence_penalty=0.0)
     response_spelist = ((response_specific["choices"][0]["text"]).split('\n'))[1:] 
-    response_spelist = [i.strip('1234567890.') for i in response_spelist]
+    response_spelist = [i.strip('1234567890. ') for i in response_spelist]
     return response_spelist
 
 def subscriber_count(followers):
