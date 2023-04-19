@@ -33,3 +33,4 @@ __pycache__
 lib
 scripts/__pycache__
 scripts/.ipynb_checkpoints
+scripts-new/config.json
