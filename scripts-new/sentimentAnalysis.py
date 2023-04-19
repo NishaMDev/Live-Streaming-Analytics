@@ -5,6 +5,7 @@ import argparse
 import json
 import sqlite3
 import pandas as pd
+import numpy as np
 import openai
 
 
@@ -13,86 +14,116 @@ class sentimentAnalyzer:
         self.chat_df = pd.DataFrame()
         self.OPENAI_API_KEY = ""
         
-    def readDatabase(self):
-        # ************************************************************
-        # Read the token       
-        # ************************************************************
         with open('config.json', 'r') as file_to_read:
             json_data = json.load(file_to_read)
             self.OPENAI_API_KEY = json_data["OPENAI_API_KEY"]
         
-        # Create a SQL connection to our SQLite database
-        conn = sqlite3.connect('data/db.sqlite3',isolation_level=None)
+    def processSentiment(self):
+    # ************************************************************
+    # READ THE CHAT TABLE AND PROCESS THE SENTIMENT.
+    # ************************************************************
+        try:
+            conn = sqlite3.connect('../data/chat_table.sqlite3',isolation_level=None)
+            cur = conn.cursor()
+            
+            offset,limit = 0 ,100  
+            iteration = 0  
+            
+            while True:
+                query = '''SELECT date,
+                                stream_datetime, 
+                                stream_length, 
+                                username, 
+                                message_text, 
+                                channel_name,
+                                stream_topic,
+                                stream_title, 
+                                chatter_count, 
+                                viewer_count, 
+                                follower_count, 
+                                subscriber_count, 
+                                stream_date, 
+                                stream_id, 
+                                new_message_text,
+                                general_sentiment,
+                                specific_sentiment
+                            FROM chats 
+                            WHERE general_sentiment = ''
+                            LIMIT %d OFFSET %d;''' % (limit, offset)
+                
+                cur.execute(query) 
+                result = cur.fetchall()
+                
+                iteration = iteration+1     
+                print("********************************************")   
+                print("Batch Iteration--> "+ str(iteration))
+                print("Length of result",len(result))  
+                print("Result",result)
+                         
+                if len(result) != 0:
+                #if iteration == 1 or  len(result) == 0:
+                    chat_batch_str = self.build_chat_batch(result)
+                    response_genlist = self.get_sentiment_score(chat_batch_str)
+                    self.updateSentimentInTable(conn, result, response_genlist)                      
+                else:  
+                    print("No more rows to process")
+                    break   
+                
+                offset += limit
+                
+            # Be sure to close the connection
+            cur.close()
+            conn.close() 
+            
+        except sqlite3.Error as error:
+            print("Failed to read data from chat table for sentiment analysis", error) 
+       
+        finally:
+            if conn:
+                # Be sure to close the connection
+                conn.close() 
 
-        # Load the data into a DataFrame
-        self.chat_df = pd.read_sql('select date,stream_datetime, stream_length, username, message_text, channel_name,stream_topic,stream_title, chatter_count, viewer_count, follower_count, subscriber_count, stream_date, stream_id from chats_table_demo', conn)
+    def updateSentimentInTable(self, conn, result, response_genlist):
+        try:
+            i=0
+            update_cur = conn.cursor()
+            print("Length of response_genlist",len(response_genlist))
+            print("response_genlist",response_genlist)
+            for rows in result:
+                print("update row value:-",response_genlist[i] ,rows[0],rows[1],rows[3],rows[14])
+                update_query = '''UPDATE chats SET  general_sentiment = '%s'
+                                      WHERE date = '%s'
+                                        AND stream_datetime = '%s'
+                                        AND username = '%s'
+                                        AND new_message_text = '%s'
+                                        ;''' % (response_genlist[i], rows[0],rows[1],rows[3],rows[14])             
+                update_cur.execute(update_query)                   
+                i=i+1
+            print("Number of rows updated",i)
+        
+        except sqlite3.Error as error:
+            print("Failed to update sentiment score for \
+                                        date - {rows[0]},stream_datetime - {rows[1]},\
+                                        username - {rows[3]} and new_message_text - {rows[14]}", error)     
 
-        # Be sure to close the connection
-        conn.close()    
-        
-    def emote_lookup(self):
-        # ************************************************************
-        #  Read Emote fact file , convert it to json and save it as emotes.json
-        # ************************************************************
-        csvFilePath = 'data/facttable/EmoteFactTable.csv'
-        jsonFilePath = 'data/emotes.json' 
-        
-        utils.emote_to_json(csvFilePath,jsonFilePath)
-        emote_json = utils.reload_json(jsonFilePath)
-    
-        self.chat_df['new_message_text'] = self.chat_df['message_text'].map(lambda x: utils.replace_emoticons(x, emote_json))
-    
-    def sentiment_score(self):
-        # ************************************************************
-        # Score sentiment of chat messages.
-        # ************************************************************
-        batch_size = 80
+    def get_sentiment_score(self, chat_batch_str):
         openai.api_key =  self.OPENAI_API_KEY
-        print("Print first line of new message text "+ self.chat_df['new_message_text'][0])
-        total_rows = self.chat_df.shape[0]
-        print("chat_len: "+ str(total_rows))
+        response_genlist = utils.general_sentiments(chat_batch_str)
+        return response_genlist
 
-        self.chat_df['general_sentiment'] =''
-        self.chat_df['specific_sentiment'] =''
-
-        # loop through all the rows
-        for i in range(0, total_rows, batch_size):
-            # get the 1000 chats from the data frame
-            chat_df_batch = self.chat_df.iloc[i:i+batch_size]
-            chat_batch_list = chat_df_batch['new_message_text'].tolist()
-            
-            j = 1
-            chat_batch_str=''
-            for chat in chat_batch_list:
-                chat_batch_str = chat_batch_str + str(j) +'.'+'"'+ chat +'"'+'\n'
-                j=j+1
+    def build_chat_batch(self, result):
+        chat_iter = 1
+        chat_batch_str=''
+        for rows in result:
+            chat = rows[14]
+            chat_batch_str = chat_batch_str + str(chat_iter) +'.'+'"'+ chat +'"'+'\n'
+            chat_iter=chat_iter+1
+        return chat_batch_str   
         
-            response_genlist = utils.general_sentiments(chat_batch_str)
-            response_spelist = utils.specific_sentiments(chat_batch_str) 
-        
-            #chat_df.loc[i:i+batch_size, 'general_sentiment'] = response_genlist
-            self.chat_df['general_sentiment'].iloc[i:i+batch_size] = response_genlist
-            self.chat_df['specific_sentiment'].iloc[i:i+batch_size] = response_spelist
-          
-            print("Completed: "+ str(i) + " out of "+ str(total_rows))
-            
-    def loadSentimentIntoDatabase(self):
-        # ************************************************************
-        # Load the sentiment scores into the database
-        # ************************************************************
-        # Create a SQL connection to our SQLite database
-        conn = sqlite3.connect('data/chat_table.sqlite3',isolation_level=None)
-        self.chat_df.to_sql('chats', conn, if_exists='replace', index = False)
-        #Commit the change
-        conn.commit()
-        # Be sure to close the connection
-        conn.close()
         
     def main(self):
-        self.readDatabase()
-        self.emote_lookup()
-        self.sentiment_score()
-        self.loadSentimentIntoDatabase()
+        self.processSentiment()     
+
         
 if __name__ == "__main__":
     sentimentAnalyzer = sentimentAnalyzer()

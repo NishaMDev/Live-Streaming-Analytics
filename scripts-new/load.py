@@ -55,6 +55,6 @@ print(" channels live now - ",channels_to_listen_to)
 # ************************************************************
 # Scrape live chat data, viewers, followers, etc into sqlite database (Duration is seconds).
 # ************************************************************
-bot.listen(channels_to_listen_to, duration = 30, until_offline = True, debug = False) 
+bot.listen(channels_to_listen_to, duration = 1, until_offline = True, debug = False) 
 print("Database loading completed.")
 # ************************************************************
