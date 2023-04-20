@@ -106,7 +106,8 @@ class dataPreparation:
         
         try:
             # Create a SQL connection to our SQLite database
-            conn = sqlite3.connect('../data/chat_table.sqlite3',isolation_level=None)
+            #conn = sqlite3.connect('../data/chat_table.sqlite3',isolation_level=None)
+            conn = sqlite3.connect('../data/db.sqlite3',isolation_level=None)
             # Create a cursor object
             cur = conn.cursor()
             
