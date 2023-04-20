@@ -23,7 +23,8 @@ class sentimentAnalyzer:
     # READ THE CHAT TABLE AND PROCESS THE SENTIMENT.
     # ************************************************************
         try:
-            conn = sqlite3.connect('../data/chat_table.sqlite3',isolation_level=None)
+            #conn = sqlite3.connect('../data/chat_table.sqlite3',isolation_level=None)
+            conn = sqlite3.connect('../data/db.sqlite3',isolation_level=None)
             cur = conn.cursor()
             
             offset,limit = 0 ,100  
@@ -58,7 +59,7 @@ class sentimentAnalyzer:
                 print("********************************************")   
                 print("Batch Iteration--> "+ str(iteration))
                 print("Length of result",len(result))  
-                print("Result",result)
+                #print("Result",result)
                          
                 if len(result) != 0:
                 #if iteration == 1 or  len(result) == 0:
@@ -88,9 +89,9 @@ class sentimentAnalyzer:
             i=0
             update_cur = conn.cursor()
             print("Length of response_genlist",len(response_genlist))
-            print("response_genlist",response_genlist)
+            #print("response_genlist",response_genlist)
             for rows in result:
-                print("update row value:-",response_genlist[i] ,rows[0],rows[1],rows[3],rows[14])
+                #print("update row value:-",response_genlist[i] ,rows[0],rows[1],rows[3],rows[14])
                 update_query = '''UPDATE chats SET  general_sentiment = '%s'
                                       WHERE date = '%s'
                                         AND stream_datetime = '%s'
