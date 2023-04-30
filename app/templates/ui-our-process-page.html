@@ -1,0 +1,211 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Cards {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<style>
+	ul.nav {
+	padding-left: 0px;
+	background-color: white;
+	text-align: center;
+	}
+	ul.nav > li {
+	display: inline-block;
+	padding: 10px 20px;
+	}
+	ul.nav > li:hover {
+	/* background-color: #2779BF; */
+	background-color: white;
+	}
+	ul.nav > li > a {
+	/* color: white; */
+	text-decoration: none;
+	}
+
+
+</style>
+
+<style type="text/css">
+	img{
+		width:850px;
+	}
+</style>
+
+
+
+<script type="text/javascript">
+
+	function imgEnlarge(e){
+		e.style.width="800px";
+		// if(e.style.width=="300px" || e.style.width=="" ){
+		// 	e.style.width="800px";
+		// }
+		// else{
+		// 	e.style.width="300px";
+		// }
+
+		// var imgLength = document.getElementsByTagName('img').length;
+
+		// for(var i = 0; i<imgLength; i++){
+		// 	if(document.getElementsByTagName('img')[i].id==  e.id){
+		// 		continue;
+		// 	}
+		// 	document.getElementsByTagName('img')[i].style.width="300px";
+
+		// }
+	}
+</script>
+
+<main class="content" style="background-color: #bde8e8;">
+
+	<div class="container">
+		<h1 class="h3 mb-3"><strong>Our Technology Stack</h1>
+		<div class="row row-cols-2">
+		  <div class="col">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col mt-0">
+							<h1 class="mt-1 mb-3">Architecture</h1>
+						</div>
+					</div>
+					<h4>
+						<P>
+							The user can choose to see their channel analytics during a livestream or after the stream. The Some of the audience insights and statistics are derived from the Twitch API (i.e., viewers, subs) while others are derived from models built into the systems' backend, like audience sentiment scores (created using a double tuned BERT model) and the topic recommendation algorithm. After pulling chat log data from Twitch's API, the data is run through our fine-tuned BERT model to assign each message a sentiment score and stored in a SQLite database. 
+						</P><BR>
+						<P>
+							From there, the scores are aggregated by time and by category to feed into the live graphic on the dashboard and the topic recommendation respectively.
+						</P><BR><BR><BR>
+					</h4>
+				</div>
+			</div>
+		  </div>
+		  <div class="col">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col mt-0">
+							<h1 class="mt-1 mb-3">NLP Model</h1>
+						</div>
+						<!-- <div class="col-auto">
+							<div class="stat text-primary">
+								<img id="img1" class="rounded mr-2 mb-2" style="max-width: 100%;max-height: 100%;" src="/static/assets/img/BERT_model.png" onclick="enlargeImg(this)"/>
+								<img id="img_0" onclick="imgEnlarge(this)" onclick="imgAssign()" src="/static/assets/img/BERT_model.png">
+							</div>
+						</div> -->
+					</div>
+					<h4>
+						<P>
+							Our sentiment scoring model is a combination of a series of fine-tuned Base-BERT models, first trained on a Masked Language Modeling task and then trained on over 5,000 annotated chat log messages downloaded from Twitch. Part of the challenge of training a model for Twitch chat data was in assigning meaning and sentiments to Twitch's emotes. Our approach was to create a nonexhaustive lookup table of Twitch emotes and their meanings that was used to help the model understand how emotes worked. 
+						</P><BR>
+						<P>
+							Addtionally, the rationale for performing a Masked Language Modeling task as an initial fine-tuning step was to "teach" the BaseBERT model, Twitch specific language. Then the same model was further refined using the 5,000 annotated chats with a multilabel classification task of sentiment analysis. We used PyTorch for fine-tuning tasks. Our final accuracy was over 85%.
+						</P>							
+					</h4>
+				</div>
+			</div>			
+		  </div>
+		  <div class="col">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col mt-0">
+							<h1 class="mt-1 mb-3">Data Engineering Pipeline</h1>
+						</div>
+					</div>
+					<h4>
+						Our data engineering pipeline is a combination of two asynchronously communicating instances on Google Cloud. The first instance, a GPU specific high compute instance with two Tesla K8-NVidia GPUs, was set up for BERT fine-tuning tasks. The second and primary instance, a more simplified Ubuntu 20.04 CPU instance, hosts our primary deployed BERT model and other backend scripts running behind a Flask microserver. 
+						
+						Further, the interactivity of the webapplication, running on the Flask microservice, is shielded using a combination of Gunicorn webserver and Nginx HTTP server for production scalability and security reasons. We have a host of other scripts and services (such as a SQLite and/or PostGreSQL instance) running on the CPU instance, asynchronously communicating with the Flask microarchitecture to download chats and other meta-data information from Twitch for analysis and machine learning tasks. We serve webpages using a combination of jQuery, AJAX and D3.js Javascript technologies.
+					</h4>
+				</div>
+			</div>			
+		  </div>
+		  <div class="col">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col mt-0">
+							<!-- <h1 class="card-title"> --> <h1 class="mt-1 mb-3">Content Recommendation Exploratory Tool</h1>
+						</div>
+					</div>
+					<h4>
+						<P>We serve recommendations to our content creators using a simplified, but continuously refined recommendation/exploratory tool. 
+							Our exploratory recommendation tool utilizes metrics for subscribers, followers, viewers and sentiment to provide a ranked list of potential topics for the user to stream. The ranking is controlled by the user’s preferences and gives different rankings based on which metrics the user wants to prioritize. The basic idea is to use the metrics from a previous stream segmented by topic and determine which topic was the most successful stream based on the user’s preferences
+						</P>
+						<BR><BR><BR><BR><BR>
+					</h4>
+				</div>
+			</div>			
+		  </div>
+		</div>
+	  </div>
+
+
+	  <div class="col-sm-12">
+		<div class="card">
+			<div class="card-header">
+				<h1 class="mt-1 mb-3">Data Engineering Pipeline</h1>
+			</div>
+			<div class="card-body py-3">
+				<img class="rounded mr-2 mb-2" src="/static/assets/img/makesense_pipeline.png"/>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header">
+				<h1 class="mt-1 mb-3">Natural Language Processing Model</h1>
+			</div>
+			<div class="card-body py-3">
+				<img class="rounded mr-2 mb-2"  style="width: 700px;" src="/static/assets/img/BERT_model.png"/>
+			</div>
+		</div>
+	</div>	
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header">
+				<h1 class="mt-1 mb-3">Data Engineering Pipeline - Detailed View</h1>
+			</div>
+			<div class="card-body py-3">
+				<img class="rounded mr-2 mb-2"  style="width: 900px;" src="/static/assets/img/in_depth_pipeline.png"/>
+			</div>
+		</div>
+	</div>	
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header">
+				<h1 class="mt-1 mb-3">Exploratory Recommendation Tool</h1>
+			</div>
+			<div class="card-body py-3">
+				<img class="rounded mr-2 mb-2"  style="width: 900px;" src="/static/assets/img/rec_slide.png"/>
+			</div>
+		</div>
+	</div>
+</main>
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+<!-- script to set display property -->
+
+<!-- script to set display property
+<script>
+	// Function to increase image size
+	function enlargeImg(img) {
+		img.style.transform = "scale(1.5)";
+		img.style.transition =
+		  "transform 0.25s ease";
+	}
+</script> -->
+
+
+
+
+
+{% block javascripts %}{% endblock javascripts %}

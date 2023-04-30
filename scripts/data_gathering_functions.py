@@ -3,14 +3,14 @@ import pandas as pd
 import numpy as np
 
 #conn = sqlite3.connect(con_string)
-con_string = 'db.sqlite3'
+con_string = 'data/db.sqlite3'
 
 
 def get_subscriber_change(channel_name, start_time):
     """
     Query sql table and get the change in subscribers for selected stream
     input: channel_name, start_time
-    output: subcriber change (int)
+    output: subscriber change (int)
     """
     
     channel_name = '\'' + channel_name + '\''
@@ -21,14 +21,14 @@ def get_subscriber_change(channel_name, start_time):
     new_subscriber_query =  '''
                     with starting_subscribers as (
                         select subscriber_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {} 
                         order by date asc
                         limit 1)
 
                     ,ending_subscribers as (
                         select subscriber_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {}
                         order by date desc
                         limit 1
@@ -39,9 +39,11 @@ def get_subscriber_change(channel_name, start_time):
 
                     '''.format(channel_name, start_time, channel_name, start_time)
     
+    print(new_subscriber_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(new_subscriber_query)
     subscriber_count = cursor_obj.fetchall()
+    print("subscriber_count - ",subscriber_count)
     subscriber_change = subscriber_count[1][0] - subscriber_count[0][0]
     conn.commit()
     conn.close()
@@ -62,14 +64,14 @@ def get_pct_subscriber_change(channel_name, start_time):
     new_subscriber_query =  '''
                     with starting_subscribers as (
                         select subscriber_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {} 
                         order by date asc
                         limit 1)
 
                     ,ending_subscribers as (
                         select subscriber_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {}
                         order by date desc
                         limit 1
@@ -80,9 +82,11 @@ def get_pct_subscriber_change(channel_name, start_time):
 
                     '''.format(channel_name, start_time, channel_name, start_time)
     
+    print(new_subscriber_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(new_subscriber_query)
     subscriber_count = cursor_obj.fetchall()
+    print("percent subscriber_count - ",subscriber_count)
     subscriber_change_pct = round((100 * (subscriber_count[1][0] - subscriber_count[0][0]) / subscriber_count[0][0]))
     conn.commit()
     conn.close()
@@ -104,14 +108,14 @@ def get_follower_change(channel_name, start_time):
     new_followers_query =  '''
                     with starting_followers as (
                         select follower_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {} 
                         order by date asc
                         limit 1)
 
                     ,ending_followers as (
                         select follower_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {}
                         order by date desc
                         limit 1
@@ -122,9 +126,11 @@ def get_follower_change(channel_name, start_time):
 
                     '''.format(channel_name, start_time, channel_name, start_time)
     
+    print(new_followers_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(new_followers_query)
     follower_count = cursor_obj.fetchall()
+    print("follower_count - ",follower_count)
     follower_change = follower_count[1][0] - follower_count[0][0]
     conn.commit()
     conn.close()  
@@ -146,14 +152,14 @@ def get_pct_follower_change(channel_name, start_time):
     new_followers_query =  '''
                     with starting_followers as (
                         select follower_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {} 
                         order by date asc
                         limit 1)
 
                     ,ending_followers as (
                         select follower_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {}
                         order by date desc
                         limit 1
@@ -164,9 +170,11 @@ def get_pct_follower_change(channel_name, start_time):
 
                     '''.format(channel_name, start_time, channel_name, start_time)
     
+    print(new_followers_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(new_followers_query)
     follower_count = cursor_obj.fetchall()
+    print("percent follower_count - ",follower_count)
     follower_count_pct = round((100 * (follower_count[0][0] - follower_count[1][0]) / follower_count[1][0]))
     conn.commit()
     conn.close()
@@ -187,10 +195,11 @@ def get_average_view_count(channel_name, start_time):
     
     average_views_query = '''
                         select round(avg(viewer_count)) as avg_viewers
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {}
                         '''.format(channel_name, start_time)
     
+    print(average_views_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(average_views_query)
     view_count = cursor_obj.fetchall()
@@ -213,10 +222,11 @@ def get_message_count(channel_name, start_time):
     
     total_messages_query = '''
                         select count(*) as total_messages
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {}
                         '''.format(channel_name, start_time)
     
+    print(total_messages_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(total_messages_query)
     message_count = cursor_obj.fetchall()
@@ -238,14 +248,16 @@ def get_average_sentiment(channel_name, start_time):
     conn = sqlite3.connect(con_string)
     
     average_sentiment_query = '''
-                        select avg(message_sentiment) as total_messages
-                        from chats_table_demo
+                        select avg(general_sentiment) as avg_sentiment
+                        from chats
                         where channel_name = {} and stream_date = {}
                         '''.format(channel_name, start_time)
     
+    print(average_sentiment_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(average_sentiment_query)
     average_sentiment = cursor_obj.fetchall()
+    print("average_sentiment - ",average_sentiment)
     conn.commit()
     conn.close()  
 
@@ -266,25 +278,26 @@ def get_pct_positive_negative(channel_name, start_time):
     
     sentiment_pct_query = '''
                         with positive_chats as (select count(*) as chat_count
-                                                from chats_table_demo
+                                                from chats
                                                 where channel_name = {} 
                                                 and stream_date = {} 
-                                                and message_sentiment > 0)
+                                                and general_sentiment > 0)
                             ,negative_chats as (select count(*) as chat_count
-                                                from chats_table_demo
+                                                from chats
                                                 where channel_name = {} 
                                                 and stream_date = {} 
-                                                and message_sentiment < 0)
+                                                and general_sentiment < 0)
                             ,neutral_chats as (select count(*) as chat_count
-                                                from chats_table_demo
+                                                from chats
                                                 where channel_name = {} 
                                                 and stream_date = {} 
-                                                and message_sentiment = 0)
+                                                and general_sentiment = 0)
                             select * from positive_chats
                             UNION ALL select * from negative_chats
                             UNION ALL select * from neutral_chats       
                         '''.format(channel_name, start_time,channel_name, start_time,channel_name, start_time)
     
+    print(sentiment_pct_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(sentiment_pct_query)
     sentiment_counts = cursor_obj.fetchall()
@@ -314,10 +327,11 @@ def get_average_chatters(channel_name, start_time):
     
     average_chatters_query = '''
                         select avg(chatter_count) as average_chatters
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} and stream_date = {}
                         '''.format(channel_name, start_time)
     
+    print(average_chatters_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(average_chatters_query)
     average_chatters = cursor_obj.fetchall()
@@ -358,11 +372,12 @@ def recommender_engine(channel_name, start_time, sorted_choices):
 
     distinct_topics_query = '''
                         select distinct stream_topic 
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} 
                         and stream_date = {}
                     '''.format(channel_name, start_time)
 
+    print(distinct_topics_query)
     cursor_obj = conn.cursor()
     cursor_obj.execute(distinct_topics_query)
     topics = cursor_obj.fetchall()
@@ -374,7 +389,7 @@ def recommender_engine(channel_name, start_time, sorted_choices):
         new_followers_query =  '''
                     with starting_followers as (
                         select follower_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} 
                         and stream_date = {} 
                         and stream_topic = {} 
@@ -383,7 +398,7 @@ def recommender_engine(channel_name, start_time, sorted_choices):
 
                     ,ending_followers as (
                         select follower_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {}
                         and stream_date = {}
                         and stream_topic = {} 
@@ -403,7 +418,7 @@ def recommender_engine(channel_name, start_time, sorted_choices):
         new_subscriber_query =  '''
                     with starting_subscribers as (
                         select subscriber_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {} 
                         and stream_date = {} 
                         and stream_topic = {} 
@@ -412,7 +427,7 @@ def recommender_engine(channel_name, start_time, sorted_choices):
 
                     ,ending_subscribers as (
                         select subscriber_count
-                        from chats_table_demo
+                        from chats
                         where channel_name = {}
                         and stream_date = {}
                         and stream_topic = {} 
@@ -436,8 +451,8 @@ def recommender_engine(channel_name, start_time, sorted_choices):
                 avg(viewer_count) as avg_viewers, 
                 max(stream_length) as max_minutes,
                 min(stream_length) as min_minutes,
-                round(avg(message_sentiment),2) as average_sentiment
-                from chats_table_demo
+                round(avg(general_sentiment),2) as average_sentiment
+                from chats
                 where channel_name = {}
                 and stream_date = {}
                 group by channel_name, stream_topic
