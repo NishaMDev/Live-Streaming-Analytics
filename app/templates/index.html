@@ -1,4 +1,3 @@
-{% extends "layouts/base.html" %}
 
 {% block title %} Dashboard {% endblock %}
 
@@ -106,24 +105,6 @@
 		}
 	</style>
 
-	<style>
-		body {
-				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-			}
-		#chart {
-				max-width: 800px;
-				max-height: 700px;
-			}
-
-		.line {
-				fill: none;
-				stroke: rgb(0, 0, 0);
-				stroke-width: 1.5px;
-			}	
-	</style>
-
-
-
 	<main class="content">
 
 		<!-- The Introduction Modal -->
@@ -184,15 +165,14 @@
 														<label><h3>Choose streamer</h3></label>
 														<select id="streamer_choose">
 															<option value="" selected>Select streamer</option>
+															<!-- <option value="xQcOW">xQcOW</option> -->
+															<!-- <option value="Summit1G">Summit1G</option> -->
+															<!-- <option value="Shroud">Shroud</option> -->
 															<option value="lirik">lirik</option>
 															<option value="gmhikaru">gmhikaru</option>
-															<option value="cryocells">cryocells</option>
-															<option value="zackrawrr">zackrawrr</option>
-															<option value="katarinafps">katarinafps</option>
-															<option value="cdawgva">cdawgva</option>
-															<option value="stewie2k">stewie2k</option>
-															<option value="summit1g">summit1g</option>
-															<option value="tarik">tarik</option>
+															<option value="shivfps">shivfps</option>
+															<option value="sweetdreams">sweetdreams</option>
+															<option value="chenny323">chenny323</option>
 														</select>
 														</div>
 													</td>
@@ -201,12 +181,16 @@
 														<label><h3>Choose date</h3></label>
 														<select id="streamer_date" style="width:150px;">
 															<option value="" selected>Select date</option>
-															<option value="2023-03-20">Mar 20, 2023</option>
-															<option value="2023-03-31">Mar 31, 2023</option>
-															<option value="2023-04-15">Apr 15, 2023</option>
-															<option value="2023-04-16">Apr 16, 2023</option>
-															<option value="2023-04-17">Apr 17, 2023</option>
-															<option value="2023-04-19">Apr 19, 2023</option>
+															<!-- <option value="07-26-2022">Jul 26, 2022</option> -->
+															<!-- <option value="07-25-2022">Jul 25, 2022</option> -->
+															<!-- <option value="07-24-2022">Jul 24, 2022</option> -->
+															<!-- <option value="07-23-2022">Jul 23, 2022</option> -->
+															<!-- <option value="07-22-2022">Jul 22, 2022</option> -->
+															<!-- <option value="07-21-2022">Jul 21, 2022</option> -->
+															<!-- <option value="07-20-2022">Jul 20, 2022</option> -->
+															<!-- <option value="07-19-2022">Jul 19, 2022</option> -->
+															<option value="2022-07-30">Jul 30, 2022</option>
+															<option value="2022-08-02">Aug 2nd, 2022</option>
 														</select>
 													</div>
 												</td>
@@ -248,6 +232,47 @@
 											</table>
 										</div>
 									</div>
+
+
+					<!-- <div class="container">
+						<div class="row">
+							<div class="col-sm-5 col-md-6" class="p-3 border bg-light">
+								<div class="select">
+									<label for="cars">Choose a streamer:</label>
+										<select id="streamer_choose" style="width:200px;">
+											<option value="" selected>Select</option>
+											<option value="xQcOW">xQcOW</option>
+											<option value="Summit1G">Summit1G</option>
+											<option value="Shroud">Shroud</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0" class="p-3 border bg-light">
+								<div>
+									<input class="historic_or_live_feed" type="checkbox" name="historic_or_live_feed" value="1" onchange="valueChanged()"/>
+
+									<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+										<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+										<label class="btn btn-outline-primary" for="btnradio1">Live</label>
+
+										<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+										<label class="btn btn-outline-primary" for="btnradio2">Recorded</label>
+									  </div>
+								</div>
+							</div>
+						</div>
+					</div>	 -->
+				
+				</div>
+				<!-- <div class="col-auto ml-auto text-right mt-n1">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
+							<li class="breadcrumb-item"><a href="#">AdminKit</a></li>
+							<li class="breadcrumb-item"><a href="#">Dashboards</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Analytics</li>
+						</ol>
+					</nav>
+				</div> -->
 				<div class="row">
 					<div class="col-xl-6 col-xxl-5 d-flex">
 						<div class="w-100">
@@ -255,11 +280,12 @@
 								<div class="col-sm-6">
 									<div class="card">
 										<div class="card-body">
+											<!-- <h5 class="card-title mb-4">Livestreamed minutes (in '000s)</h5> -->
 											<h3>Average Sentiment</h3>
 											<h1 class="mt-1 mb-3"><div id='avg_sentiment'></div></h1>
 											<div class="mb-1">
 												<span class="text-muted"> <i class="mdi mdi-arrow-bottom-right"></i> <div id='chat_percentages'></div></span>
-											</div>
+										</div>
 										</div>
 									</div>
 									<div class="card">
@@ -284,6 +310,10 @@
 										<div class="card-body">
 											<h3>Total Messages</h3>
 											<h1 class="mt-1 mb-3"><div id='total_messages'></div></h1>
+											<!-- <div class="mb-1">
+												<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> <div id='streamer_visitors_earnings_perc'></div></span>
+												<span class="text-muted">Since last week</span>
+											</div> -->
 										</div>
 									</div>
 									<div class="card">
@@ -320,7 +350,7 @@
 												<li class="ui-state-default" id="average_sentiment">Sentiment</li>
 												<li class="ui-state-default" id="avg_viewers">Avg Viewers</li>
 											</ul>
-										
+											<!-- <input type="submit" class="btn btn-primary" value="Submit" onclick="submit()"> -->
 											<button type="button" id="recEngineBtn" class="btn btn-primary">Refresh</button>
 											<div class="card-header">
 													<h5><i>Drag and arrange these metrics in order of your preference to obtain topic recommendations</i></h5>
@@ -346,6 +376,7 @@
 											<!-- <h1 class="mt-1 mb-3"> -->
 												<div id='read_random_sentiments'>
 													<h3 class="mt-1 mb-3"><div id='read_random_sentiments_label'></div></h3>
+													<!-- <h2 class="mt-1 mb-3"><div id='read_random_sentiments_user'></div></h2> -->
 													<h3 class="mt-1 mb-3"><div id='read_random_sentiments_value'></div></h3>
 												</div>
 											<!-- </h1> -->
@@ -357,8 +388,41 @@
 						</div>
 					</div>
 
+				<!-- <div class="col-xl-6 col-xxl-7">
+					<div class="card flex-fill w-100">
+						<div class="card-header">
 
-				
+							<h5 class="card-title mb-0">Recent Movement</h5>
+						</div>
+						<div class="card-body py-3">
+							<div class="chart chart-sm">
+								<canvas id="chartjs-dashboard-line"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+
+
+
+				<style>
+					body {
+							font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+					}
+					#chart {
+						max-width: 800px;
+						max-height: 700px;
+					}
+				</style>
+
+				<style>
+					.line {
+						fill: none;
+						stroke: rgb(0, 0, 0);
+						stroke-width: 1.5px;
+					}
+				</style>
 				<div class="col-xl-6 col-xxl-7" id="live_feed" style="display:none">
 					<div class="card flex-fill w-100">
 						<div class="card-header">
@@ -1285,6 +1349,36 @@
 		</script>
 		<script>
 
+
+			// $('#streamer_choose').change(function(){
+			// 	var selVal = $(this).val();
+			// 	console.log('Inside the continuous looping function', selVal)
+			// 	// if (selVal == ""){
+			// 			setInterval(function(){ 
+			// 			//code goes here that will be run every 5 seconds.    
+			// 			$.ajax({
+			// 					url: "/read_random_sentiments",
+			// 					type: "get",
+			// 					data: {},
+			// 					dataType:"JSON",
+			// 				success: function(response) {
+			// 					// console.log(response);
+           	// 					console.log(response[0].sentiment_display);
+			// 					console.log(response[0].prob_score);
+			// 					$("#read_random_sentiments").html(response[0].sentiment_display);
+			// 					data.push(response[0].prob_score);
+			// 					// $("#data").html(data[0].sentiment_display);
+			// 				},
+			// 				error: function(xhr) {
+			// 				//Do Something to handle error
+			// 				}
+			// 			});
+			// 		}, 3000);
+			// 	// }
+			// });
+
+
+
 			$(document).ready(function () {
 				intro_modal.style.display = "block"; // call modal here
 				$("#sortable_ul").hide();
@@ -1348,6 +1442,19 @@
 							$("#rec_engine_output_table").html("");
 							$("#rec_engine_output_table").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Go to the recordings tab to access your recommended streams based your history</p>');	
 
+							// $("#read_random_sentiments").html("");
+							// $("#read_random_sentiments").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Go to the recordings tab to access your recommended streams based your history</p>');	
+
+							// call_streamer_func('/average_viewers', strUser, strDate, '#average_viewers');
+							// call_streamer_func('/followers_change', strUser, strDate, '#followers_change');
+							// call_streamer_func('/subscriber_change', strUser, strDate, '#subscriber_change');
+							// call_streamer_func('/avg_sentiment', strUser, strDate, '#avg_sentiment');
+							// call_streamer_func('/avg_chatters', strUser, strDate, '#avg_chatters');
+							// call_streamer_func('/total_messages', strUser, strDate, '#total_messages');
+							// call_streamer_func('/streamer_visitors_earnings', strUser, strDate, '#streamer_visitors_earnings');
+							// call_streamer_func('/streamer_visitors_earnings_perc', strUser, strDate, '#streamer_visitors_earnings_perc');
+							// call_streamer_func('/rec_engine_output_table', strUser, strDate, '#rec_engine_output_table');
+
 							modal.style.display = "block"; // call modal here
 
 							setInterval(function(){ 
@@ -1358,6 +1465,7 @@
 										data: {},
 										dataType:"JSON",
 									success: function(response) {
+										// console.log(response);
 										console.log(response[0].sentiment_display);
 										console.log(response[0].prob_score);
 										$("#read_random_sentiments_label").html(response[0].sentiment_display);
@@ -1393,6 +1501,7 @@
 							call_streamer_func('/chat_percentages', strUser, strDate, '#chat_percentages');
 							// call_streamer_func('/rec_engine_output_table', strUser, strDate, '#rec_engine_output_table');
 							$("#rec_engine_output_table").html("");
+
 
 							if(text=='sweetdreams'){
 								$("#lirik_svg").hide();
