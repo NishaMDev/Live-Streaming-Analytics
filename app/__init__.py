@@ -1,8 +1,3 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 from flask import Flask, url_for
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -18,9 +13,14 @@ def register_extensions(app):
     login_manager.init_app(app)
 
 def register_blueprints(app):
-    for module_name in ('base', 'home'):
-        module = import_module('app.{}.routes'.format(module_name))
-        app.register_blueprint(module.blueprint)
+    # blueprint for auth routes in our app
+    from .auth import auth as auth
+    app.register_blueprint(auth)
+
+    # blueprint for non-auth parts of app
+    from .main import main as main
+    app.register_blueprint(main)
+
 
 def configure_database(app):
 
@@ -32,8 +32,9 @@ def configure_database(app):
     def shutdown_session(exception=None):
         db.session.remove()
 
+
 def create_app(config):
-    app = Flask(__name__, static_folder='base/static')
+    app = Flask(__name__, static_folder='static')
     app.config.from_object(config)
     register_extensions(app)
     register_blueprints(app)
