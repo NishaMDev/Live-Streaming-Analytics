@@ -2,7 +2,10 @@
 import sqlite3
 import pandas as pd
 import sys
-from utils import Utils
+from scripts.utils import Utils
+
+dbPath = 'data/db.sqlite3'
+
 
 class ChatSummarization:
     def __init__(self, channel_name, stream_date):
@@ -14,7 +17,7 @@ class ChatSummarization:
         # channel_name = "cdawgva"
         # Create a SQL connection to our SQLite database
         try:
-            conn = sqlite3.connect('../data/chat_table.sqlite3',isolation_level=None)
+            conn = sqlite3.connect(dbPath,isolation_level=None)
 
             # Load the data into a DataFrame
             self.chat_df = pd.read_sql_query("SELECT message_text FROM chats WHERE stream_date = ? AND channel_name = ?", conn, params=(self.stream_date, self.channel_name))
@@ -64,7 +67,7 @@ class ChatSummarization:
         summary_df = pd.DataFrame(data)  
         try:
         # Create your connection.
-            conn = sqlite3.connect("../data/db.sqlite3")
+            conn = sqlite3.connect(dbPath)
             
             # Write the dataframe to sqlite
             summary_df.to_sql("chat_summary", conn, if_exists='replace', index=False)
@@ -85,7 +88,7 @@ class ChatSummarization:
     def getChatSummary(self):
             # Create a SQL connection to our SQLite database
             try:
-                conn = sqlite3.connect('../data/db.sqlite3',isolation_level=None)
+                conn = sqlite3.connect(dbPath,isolation_level=None)
                 # Load the data into a DataFrame
                 result = pd.read_sql_query("SELECT chat_summary FROM chat_summary WHERE stream_date = ? AND channel_name = ?", conn, params=(self.stream_date, self.channel_name))
                 # Be sure to close the connection
@@ -109,7 +112,7 @@ if __name__ == "__main__":
     chatSummary.mergeChat()
     res = chatSummary.getChatSummary()
     print(res)
-
+  
 
 
 

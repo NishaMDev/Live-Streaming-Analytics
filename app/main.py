@@ -10,6 +10,7 @@ import pandas as pd
 
 import scripts.data_gathering_functions as dg
 from scripts.read_sentiments_from_db import read_sentiments
+from scripts.chatSummarization import ChatSummarization
 from . import db
 
 main = Blueprint('main', __name__)
@@ -69,6 +70,17 @@ def testfn():
 # @login_required
 def get_rand_sentiments():
    return read_sentiments()
+
+@main.route('/chat_summary')
+# @login_required
+def get_chat_summary():
+    streamer_choose_id = request.args.get('streamer_choose_id')
+    streamer_choose_dt = request.args.get('streamer_choose_dt')
+    chatSummary = ChatSummarization(streamer_choose_id, streamer_choose_dt)
+
+    chat_summary = chatSummary.getChatSummary()
+    print('in get_chat_summary: ', chat_summary)
+    return '<p>'+chat_summary+'</p>'
 
 
 @main.route('/refresh_sentiments')
@@ -271,3 +283,15 @@ def get_recommendations():
     
     print('Here are the sorted choices ---> ', sorted_choices)
     return dg.recommender_engine(streamer_choose_id, streamer_choose_dt, sorted_choices)
+
+@main.route('/plotly_graph', methods=['GET'])
+#@login_required
+def plot_graph():
+    """
+    Calls recommender_engine and a dictionary of values and scores corresponding to the recommender model
+    output: recommendation_dict (dict)
+    """
+    streamer_choose_id = request.args.get('streamer_choose_id')
+
+    print('Plotly start ---> ', streamer_choose_id)
+    return dg.get_streamer_graph(streamer_choose_id)
