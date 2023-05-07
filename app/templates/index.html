@@ -1,457 +1,631 @@
-{% extends "layouts/base.html" %}
-
-{% block title %} Dashboard {% endblock %}
+{% extends "layouts/base.html" %} {% block title %} Dashboard {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
-	<style>
-	</style>
+<style></style>
 {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link
+  rel="stylesheet"
+  href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"
+/>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/demos/style.css" />
 
 <style>
-	#sortable1 { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
-	#sortable1 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+  #sortable1 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 2.5em;
+    float: left;
+    margin-right: 10px;
+  }
+  #sortable1 li {
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 120px;
+  }
 </style>
 
 <style>
-		body {font-family: Arial, Helvetica, sans-serif;}
-		/* The Modal (background) */
-		.modal {
-		display: none; /* Hidden by default */
-		position: fixed; /* Stay in place */
-		z-index: 1; /* Sit on top */
-		padding-top: 100px; /* Location of the box */
-		left: 0;
-		top: 0;
-		width: 100%; /* Full width */
-		height: 100%; /* Full height */
-		overflow: auto; /* Enable scroll if needed */
-		background-color: rgb(0,0,0); /* Fallback color */
-		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-		}
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
 
-		.stylish select   { 
-			/* background: transparent; */
-			width: 175px;
-			font-size:17pt;
-			color:black;
-			border: 2;
-			border-radius: 2;
-			/* height: px; */
-			/* -webkit-appearance: none;  */
-		}
+  .stylish select {
+    /* background: transparent; */
+    width: 175px;
+    font-size: 17pt;
+    color: black;
+    border: 2;
+    border-radius: 2;
+    /* height: px; */
+    /* -webkit-appearance: none;  */
+  }
 
-		/* div-custom-sentiment {
+  /* div-custom-sentiment {
 			overflow:visible;
 		} */
 
-		/* Modal Content */
-		.modal-content {
-		position: relative;
-		background-color: #fefefe;
-		margin: auto;
-		padding: 0;
-		border: 1px solid #888;
-		width: 50%;
-		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-		-webkit-animation-name: animatetop;
-		-webkit-animation-duration: 0.4s;
-		animation-name: animatetop;
-		animation-duration: 0.4s
-		}
-		
-		/* Add Animation */
-		@-webkit-keyframes animatetop {
-		from {top:-300px; opacity:0} 
-		to {top:0; opacity:1}
-		}
-		
-		@keyframes animatetop {
-		from {top:-300px; opacity:0}
-		to {top:0; opacity:1}
-		}
-		
-		/* The Close Button */
-		.close {
-		color: white;
-		float: right;
-		font-size: 28px;
-		font-weight: bold;
-		}
-		
-		.close:hover,
-		.close:focus {
-		color: #000;
-		text-decoration: none;
-		cursor: pointer;
-		}
-		
-		.modal-header {
-		padding: 2px 16px;
-        background-color: #a8e6cf;
-        color: #eeeeee;
-		}
-		
-		.modal-body {padding: 2px 16px;}
-		
-		.modal-footer {
-		padding: 2px 16px;
-        background-color: #a8e6cf;
-        color: #eeeeee;
-		}
-	</style>
+  /* Modal Content */
+  .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+  }
 
-	<style>
-		body {
-				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-			}
-		#chart {
-				max-width: 800px;
-				max-height: 700px;
-			}
+  /* Add Animation */
+  @-webkit-keyframes animatetop {
+    from {
+      top: -300px;
+      opacity: 0;
+    }
+    to {
+      top: 0;
+      opacity: 1;
+    }
+  }
 
-		.line {
-				fill: none;
-				stroke: rgb(0, 0, 0);
-				stroke-width: 1.5px;
-			}	
-	</style>
+  @keyframes animatetop {
+    from {
+      top: -300px;
+      opacity: 0;
+    }
+    to {
+      top: 0;
+      opacity: 1;
+    }
+  }
 
+  /* The Close Button */
+  .close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
 
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
-	<main class="content" style="background-color: #ccf3f3;">
+  .modal-header {
+    padding: 2px 16px;
+    background-color: #a8e6cf;
+    color: #eeeeee;
+  }
 
-		<!-- The Introduction Modal -->
-		<div id="intro_modal" class="modal">
-			<!-- Modal content -->
-			<div class="modal-content">
-				<div class="modal-header">
-					<span class="close">&times;</span>
-					<h5>&nbsp;&nbsp;&nbsp;&nbsp;</h5>
-				</div>
-				<div class="modal-body">
-					<table style="border:1px solid black;margin-left:auto;margin-right:auto;">
-						<tr>
-							<td>
-								<h3><p>Welcome to Level Up The Insights - Interpreting data for aspiring content creators!</p></h3>
-							</td>
-							<td>
-								<img style="max-width: 45%;max-height: 45%;" src={{ url_for('static', filename="LogoLiveStreamingProject.png") }}>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<h4>
-									<ul>
-										<li>Select a streamer and a date from the dropdowns on top</li>
-										<li>Choose from an option of "recorded" OR "live" tabs on the input to enter the analysis sections</li>
-										<li>Note that the "live" mode for sentiment analysis tool is currently in beta mode</li>
-										<li>Metric tiles on the top left portion of the tool show important metrics to help summarize a stream quickly for the chosen date</li>
-										<li>A recording of video-on-demand, as well as a detailed analysis in graphs, of the chosen stream is on the right side of the tool</li>
-										<li>Stream category performance snapshot shows the "optimal stream-topic" recommendation exploratory tool based on stream history</li>
-										<li>Metrics can be ordered or shuffled as per streamer preference in the stream category performance tool</li>
-										<li>Stream chats tile shows sample chats and how the underlying fine-tuned BERT NLP model classifies sentiments of ongoing chats</li>
-									  </ul>
-								</h4>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<h3>&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-				</div>
-			</div>
-		</div>				
+  .modal-body {
+    padding: 2px 16px;
+  }
 
+  .modal-footer {
+    padding: 2px 16px;
+    background-color: #a8e6cf;
+    color: #eeeeee;
+  }
+</style>
 
-		<div class="container-fluid p-0">
+<style>
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  #chart {
+    max-width: 800px;
+    max-height: 700px;
+  }
 
-			<div class="row mb-2 mb-xl-3">
-				<div class="col-auto d-none d-sm-block">
-					<h3><strong>Twitch Data Analytics Dashboard</strong></h3>
-									<div class="col-sm-12">
-										<div class="card">
-										<!-- <div class="card-body d-flex">	 -->
-											<table style="border:1px solid black;margin-left:auto;margin-right:auto;border-spacing:33px;border-collapse:separate;">
-												<tr>
-												<td>
-													<div class="stylish">
-														<label><h3>Choose streamer</h3></label>
-														<select id="streamer_choose">
-															<option value="" selected>Select streamer</option>
-															<option value="lirik">lirik</option>
-															<option value="gmhikaru">gmhikaru</option>
-															<option value="cryocells">cryocells</option>
-															<option value="zackrawrr">zackrawrr</option>
-															<option value="katarinafps">katarinafps</option>
-															<option value="cdawgva">cdawgva</option>
-															<option value="stewie2k">stewie2k</option>
-															<option value="summit1g">summit1g</option>
-															<option value="tarik">tarik</option>
-														</select>
-														</div>
-													</td>
-												<td>
-													<div class="stylish">
-														<label><h3>Choose date</h3></label>
-														<select id="streamer_date" style="width:150px;">
-															<option value="" selected>Select date</option>
-															<option value="2023-03-20">Mar 20, 2023</option>
-															<option value="2023-03-31">Mar 31, 2023</option>
-															<option value="2023-04-15">Apr 15, 2023</option>
-															<option value="2023-04-16">Apr 16, 2023</option>
-															<option value="2023-04-17">Apr 17, 2023</option>
-															<option value="2023-04-19">Apr 19, 2023</option>
-														</select>
-													</div>
-												</td>
-												<td>	
-														<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-															<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-															<label class="btn btn-outline-primary" for="btnradio2">Recorded</label>
+  .line {
+    fill: none;
+    stroke: rgb(0, 0, 0);
+    stroke-width: 1.5px;
+  }
+</style>
 
-															<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
-															<label class="btn btn-outline-primary" for="btnradio1">Live (Beta!)</label>
+<main class="content" style="background-color: #ccf3f3">
+  <!-- The Introduction Modal -->
+  <div id="intro_modal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h5>&nbsp;&nbsp;&nbsp;&nbsp;</h5>
+      </div>
+      <div class="modal-body">
+        <table
+          style="border: 1px solid black; margin-left: auto; margin-right: auto"
+        >
+          <tr>
+            <td>
+              <h3>
+                <p>
+                  Welcome to Level Up The Insights - Interpreting data for
+                  aspiring content creators!
+                </p>
+              </h3>
+            </td>
+            <td>
+              <img style="max-width: 45%;max-height: 45%;" src={{
+              url_for('static', filename="LogoLiveStreamingProject.png") }}>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4>
+                <ul>
+                  <li>
+                    Select a streamer and a date from the dropdowns on top
+                  </li>
+                  <li>
+                    Choose from an option of "recorded" OR "live" tabs on the
+                    input to enter the analysis sections
+                  </li>
+                  <li>
+                    Note that the "live" mode for sentiment analysis tool is
+                    currently in beta mode
+                  </li>
+                  <li>
+                    Metric tiles on the top left portion of the tool show
+                    important metrics to help summarize a stream quickly for the
+                    chosen date
+                  </li>
+                  <li>
+                    A recording of video-on-demand, as well as a detailed
+                    analysis in graphs, of the chosen stream is on the right
+                    side of the tool
+                  </li>
+                  <li>
+                    Stream category performance snapshot shows the "optimal
+                    stream-topic" recommendation exploratory tool based on
+                    stream history
+                  </li>
+                  <li>
+                    Metrics can be ordered or shuffled as per streamer
+                    preference in the stream category performance tool
+                  </li>
+                  <li>
+                    Stream chats tile shows sample chats and how the underlying
+                    fine-tuned BERT NLP model classifies sentiments of ongoing
+                    chats
+                  </li>
+                </ul>
+              </h4>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+      </div>
+    </div>
+  </div>
 
-															<!-- The Modal -->
-															<div id="myModal" class="modal">
-																<!-- Modal content -->
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<span class="close">&times;</span>
-																		<h5>&nbsp;&nbsp;&nbsp;&nbsp;</h5>
-																	</div>
-																	<div class="modal-body">
-																		<h3>
-																			<p>Welcome to the live section of the Twitch recommendation engine!</p>
-																			<p>This is still a work in progress and only a beta version for your review.</p>
-																			<p>Check back later for more!</p>
-																		</h3>
-																	</div>
-																	<div class="modal-footer">
-																		<h3>&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-																	</div>
-																</div>
-															</div>															
+  <div class="container-fluid p-0">
+    <div class="row mb-2 mb-xl-3">
+      <div class="col-auto d-none d-sm-block">
+        <h3><strong>Twitch Data Analytics Dashboard</strong></h3>
+        <div class="col-sm-12">
+          <div class="card">
+            <!-- <div class="card-body d-flex">	 -->
+            <table
+              style="
+                border: 1px solid black;
+                margin-left: auto;
+                margin-right: auto;
+                border-spacing: 33px;
+                border-collapse: separate;
+              "
+            >
+              <tr>
+                <td>
+                  <div class="stylish">
+                    <label><h3>Choose streamer</h3></label>
+                    <select id="streamer_choose">
+                      <option value="" selected>Select streamer</option>
+                      <option value="lirik">lirik</option>
+                      <option value="gmhikaru">gmhikaru</option>
+                      <option value="cryocells">cryocells</option>
+                      <option value="zackrawrr">zackrawrr</option>
+                      <option value="katarinafps">katarinafps</option>
+                      <option value="cdawgva">cdawgva</option>
+                      <option value="stewie2k">stewie2k</option>
+                      <option value="summit1g">summit1g</option>
+                      <option value="tarik">tarik</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div class="stylish">
+                    <label><h3>Choose date</h3></label>
+                    <select id="streamer_date" style="width: 150px">
+                      <option value="" selected>Select date</option>
+                      <option value="2023-03-20">Mar 20, 2023</option>
+                      <option value="2023-03-31">Mar 31, 2023</option>
+                      <option value="2023-04-15">Apr 15, 2023</option>
+                      <option value="2023-04-16">Apr 16, 2023</option>
+                      <option value="2023-04-17">Apr 17, 2023</option>
+                      <option value="2023-04-19">Apr 19, 2023</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic radio toggle button group"
+                  >
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="btnradio"
+                      id="btnradio2"
+                      autocomplete="off"
+                    />
+                    <label class="btn btn-outline-primary" for="btnradio2"
+                      >Recorded</label
+                    >
 
-														</div>
-													</td>
-												<td>
-													<button type="button" id="submitBtn" class="btn btn-primary">Refresh</button>
-												</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-				<div class="row">
-					<div class="col-xl-6 col-xxl-5 d-flex">
-						<div class="w-100">
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="card">
-										<div class="card-body">
-											<h3>Average Sentiment</h3>
-											<h1 class="mt-1 mb-3"><div id='avg_sentiment'></div></h1>
-											<div class="mb-1">
-												<span class="text-muted"> <i class="mdi mdi-arrow-bottom-right"></i> <div id='chat_percentages'></div></span>
-											</div>
-										</div>
-									</div>
-									<div class="card">
-										<div class="card-body">
-											<h3>Average Viewers</h3>
-											<h1 class="mt-1 mb-3"><div id='average_viewers'></div></h1>
-										</div>
-									</div>		
-									<div class="card">
-										<div class="card-body">
-											<h3>Average Chatters</h3>
-											<h1 class="mt-1 mb-3"><div id='visitor_count'></div> <div id='avg_chatters'></div></h1>
-												<div class="mb-1">
-												<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> <div id='streamer_visitors'></div></span>
-												<!-- <span class="text-muted">Since last week</span> -->
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="card">
-										<div class="card-body">
-											<h3>Total Messages</h3>
-											<h1 class="mt-1 mb-3"><div id='total_messages'></div></h1>
-										</div>
-									</div>
-									<div class="card">
-										<div class="card-body">
-											<h3>Followers Growth</h3>
-											<h1 class="mt-1 mb-3"><div id='followers_change'></div></h1>
-											<div class="mb-1">
-												<span class="text-muted"> <i class="mdi mdi-arrow-bottom-right"></i><div id='pct_follower_change'></div></span>
-											</div>
-										</div>
-									</div>
-									<div class="card">
-										<div class="card-body">
-											<h3>Subscribers Growth</h3>
-											<h1 class="mt-1 mb-3"><div id='subscriber_change'></div></h1>
-											<div class="mb-1">
-													<span class="text-muted"> <i class="mt-1 mb-3"></i><div id='pct_subscriber_change'></div></span>
-											</div>
-										</div>
-									</div>								
-								</div>
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="btnradio"
+                      id="btnradio1"
+                      autocomplete="off"
+                    />
+                    <label class="btn btn-outline-primary" for="btnradio1"
+                      >Live (Beta!)</label
+                    >
 
-								<!-- card to show recommendation of channel -->
-								<div class="col-sm-12">
-									<div class="card flex-fill">
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                      <!-- Modal content -->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <span class="close">&times;</span>
+                          <h5>&nbsp;&nbsp;&nbsp;&nbsp;</h5>
+                        </div>
+                        <div class="modal-body">
+                          <h3>
+                            <p>
+                              Welcome to the live section of the Twitch
+                              recommendation engine!
+                            </p>
+                            <p>
+                              This is still a work in progress and only a beta
+                              version for your review.
+                            </p>
+                            <p>Check back later for more!</p>
+                          </h3>
+                        </div>
+                        <div class="modal-footer">
+                          <h3>&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <button type="button" id="submitBtn" class="btn btn-primary">
+                    Refresh
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-6 col-xxl-5 d-flex">
+            <div class="w-100">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>Average Sentiment</h3>
+                      <h1 class="mt-1 mb-3"><div id="avg_sentiment"></div></h1>
+                      <div class="mb-1">
+                        <span class="text-muted">
+                          <i class="mdi mdi-arrow-bottom-right"></i>
+                          <div id="chat_percentages"></div
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>Average Viewers</h3>
+                      <h1 class="mt-1 mb-3">
+                        <div id="average_viewers"></div>
+                      </h1>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>Average Chatters</h3>
+                      <h1 class="mt-1 mb-3">
+                        <div id="visitor_count"></div>
+                        <div id="avg_chatters"></div>
+                      </h1>
+                      <div class="mb-1">
+                        <span class="text-success">
+                          <i class="mdi mdi-arrow-bottom-right"></i>
+                          <div id="streamer_visitors"></div
+                        ></span>
+                        <!-- <span class="text-muted">Since last week</span> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>Total Messages</h3>
+                      <h1 class="mt-1 mb-3"><div id="total_messages"></div></h1>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>Followers Growth</h3>
+                      <h1 class="mt-1 mb-3">
+                        <div id="followers_change"></div>
+                      </h1>
+                      <div class="mb-1">
+                        <span class="text-muted">
+                          <i class="mdi mdi-arrow-bottom-right"></i>
+                          <div id="pct_follower_change"></div
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>Subscribers Growth</h3>
+                      <h1 class="mt-1 mb-3">
+                        <div id="subscriber_change"></div>
+                      </h1>
+                      <div class="mb-1">
+                        <span class="text-muted">
+                          <i class="mt-1 mb-3"></i>
+                          <div id="pct_subscriber_change"></div
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-										<div class="card-header">
-											<h3>Stream Category Performance</h3>
-										</div>
-										<div class="card-header" id="sortable_ul">
-											<ul id="sortable1" class="connectedSortable">
-												<li class="ui-state-default" id="subscriber_change">Subscribers</li>
-												<li class="ui-state-default" id="followers_change">Followers</li>
-												<li class="ui-state-default" id="average_sentiment">Sentiment</li>
-												<li class="ui-state-default" id="avg_viewers">Avg Viewers</li>
-											</ul>
-										
-											<button type="button" id="recEngineBtn" class="btn btn-primary">Refresh</button>
-											<div class="card-header">
-													<h5><i>Drag and arrange these metrics in order of your preference to obtain topic recommendations</i></h5>
-											</div>
-		
-										</div>
-										<!-- <div class="card-body d-flex"> -->
-										<div width="100%">	
-											<div id='rec_engine_output_table'></div>
-										</div>
-									</div>
-								</div>
-								<!-- card to show recommendation of channel -->
+                <!-- card to show recommendation of channel -->
+                <div class="col-sm-12">
+                  <div class="card flex-fill">
+                    <div class="card-header">
+                      <h3>Stream Category Performance</h3>
+                    </div>
+                    <div class="card-header" id="sortable_ul">
+                      <ul id="sortable1" class="connectedSortable">
+                        <li class="ui-state-default" id="subscriber_change">
+                          Subscribers
+                        </li>
+                        <li class="ui-state-default" id="followers_change">
+                          Followers
+                        </li>
+                        <li class="ui-state-default" id="average_sentiment">
+                          Sentiment
+                        </li>
+                        <li class="ui-state-default" id="avg_viewers">
+                          Avg Viewers
+                        </li>
+                      </ul>
 
-								<!-- temporary card to show emotions -->
-								
-								<div class="col-sm-12">
-									<div class="card">
-										<div class="card-body">
-											<h3>Stream Chat Sentiments</h3>
-											<h5><i>Below chats are directly interpreted by our custom TwitchBERT model and scored in real time</i></h5>
-											<br>
-											<!-- <h1 class="mt-1 mb-3"> -->
-												<div id='read_random_sentiments'>
-													<h3 class="mt-1 mb-3"><div id='read_random_sentiments_label'></div></h3>
-													<h3 class="mt-1 mb-3"><div id='read_random_sentiments_value'></div></h3>
-												</div>
-											<!-- </h1> -->
-										</div>
-									</div>
-								</div>
-								<!-- temporary card to show emotions -->								
-							</div>
-						</div>
-					</div>
+                      <button
+                        type="button"
+                        id="recEngineBtn"
+                        class="btn btn-primary"
+                      >
+                        Refresh
+                      </button>
+                      <div class="card-header">
+                        <h5>
+                          <i
+                            >Drag and arrange these metrics in order of your
+                            preference to obtain topic recommendations</i
+                          >
+                        </h5>
+                      </div>
+                    </div>
+                    <!-- <div class="card-body d-flex"> -->
+                    <div width="100%">
+                      <div id="rec_engine_output_table"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- card to show recommendation of channel -->
 
+                <!-- temporary card to show emotions -->
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>Stream Chat Sentiments</h3>
+                      <h5>
+                        <i
+                          >Below chats are directly interpreted by our custom
+                          TwitchBERT model and scored in real time</i
+                        >
+                      </h5>
+                      <br />
+                      <!-- <h1 class="mt-1 mb-3"> -->
+                      <div id="read_random_sentiments">
+                        <h3 class="mt-1 mb-3">
+                          <div id="read_random_sentiments_label"></div>
+                        </h3>
+                        <h3 class="mt-1 mb-3">
+                          <div id="read_random_sentiments_value"></div>
+                        </h3>
+                      </div>
+                      <!-- </h1> -->
+                    </div>
+                  </div>
+                </div>
 
-				
-				<div class="col-xl-6 col-xxl-7" id="live_feed" style="display:none">
-					<div class="card flex-fill w-100">
-						<div class="card-header">
-							<h5 class="card-title mb-0">Recent sentiments for our selected streams</h5>
-						</div>
-						<div class="card-body py-3">
-							<div class="chart chart-sm">
-								<script type="text/javascript">
-									$(document).ready(function(){
-									//   refreshTable();
-									//   refresh_sentiments_using_d3();
-									});
-									
-									function refreshTable(){
-										$.ajax({
-											url: "/refresh_sentiments",
-											type: "get",
-											data: "{}",
-											success:
-											function(data){
-												// $('#links').text(result); //insert text of test.php into your div
-												console.log('-----> ', data)
-												refresh_sentiments_using_d3(data);
-												setTimeout(function(){
-													refreshTable(); //this will send request again and again;
-												}, 5000);
-											}
-										});
-									}
-								</script>
-								<!-- <canvas id="chartjs-dashboard-line"></canvas> -->
-								<!-- <div id="chart"></div> -->
-								<style>
-									div.video-background {
-										z-index: 99999;
-									}
-									div.video-background video {
-										z-index: 1 !important;
-									}
-								</style>
-								<div class="ratio ratio-16x9">
-									<video controls width="800" height="600" loop autoplay>
-										<source src={{ url_for('static', filename="supcaitlin_twitch_recording_2022-07-15.mp4") }} type="video/mp4">
-										<source src={{ url_for('static', filename="supcaitlin_twitch_recording_2022-07-15 at 1.17.29 AM_2.mp4") }} type="video/mp4">
-										<source src={{ url_for('static', filename="criticalrole_twitch_recording_2022-07-15 at 1.14.40 AM.mp4") }} type="video/mp4">
-										Your browser does not support the video tag.
-									</video>	
-								</div>
-								<svg width="800" height="200" id="svg1"></svg>
-							</div>
-						</div>
-					</div>
-				</div>
-				
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>Stream Chat Summarization</h3>
+                      <h5>
+                        <i
+                          >Below chats are directly summarized by our OPENAI
+                          model in real time</i
+                        >
+                      </h5>
+                      <br />
+                      <!-- <h1 class="mt-1 mb-3"> -->
+                      <div id="chat_summary">
+                        <h3 class="mt-1 mb-3">
+                          <div id="read_random_sentiments_label"></div>
+                        </h3>
+                        <h3 class="mt-1 mb-3">
+                          <div id="read_random_sentiments_value"></div>
+                        </h3>
+                      </div>
+                      <!-- </h1> -->
+                    </div>
+                  </div>
+                </div>
+                <!-- temporary card to show emotions -->
+              </div>
+            </div>
+          </div>
 
-				<div class="col-xl-6 col-xxl-7" id="historic_feed" style="display:none">
-					<div class="card flex-fill w-100">
-						<div class="card-header">
-							<h3>Historic sentiments for our selected streams</h3>
-						</div>
-						<div class="card-body py-3">
-							<div id="video1">
-								<video controls width="100%" height="75%" loop autoplay>
-									<source src={{ url_for('static', filename="TwitchGif.mp4") }} type="video/mp4">
-									Your browser does not support the video tag.
-								</video>
-							</div>
-							<div id="video2">
-								<video controls width="100%" height="75%" loop autoplay>
-									<source src={{ url_for('static', filename="TwitchGif_2.mp4") }} type="video/mp4">
-									Your browser does not support the video tag.
-								</video>
-							</div>
-							<div id="video3">
-								<video controls width="100%" height="75%" loop autoplay>
-									<source src={{ url_for('static', filename="TwitchGif_3.mp4") }} type="video/mp4">
-									Your browser does not support the video tag.
-								</video>
-							</div>															
-							<div class="card-header">
-								<h3>Detailed Breakdown of Stream</h3>
-							</div>
-							<object type="image/svg+xml" data={{ url_for('static', filename="legend.svg") }}></object>
+          <div class="col-xl-6 col-xxl-7" id="live_feed" style="display: none">
+            <div class="card flex-fill w-100">
+              <div class="card-header">
+                <h5 class="card-title mb-0">
+                  Recent sentiments for our selected streams
+                </h5>
+              </div>
+              <div class="card-body py-3">
+                <div class="chart chart-sm">
+                  <script type="text/javascript">
+                    $(document).ready(function () {
+                      //   refreshTable();
+                      //   refresh_sentiments_using_d3();
+                    });
 
-							<!-- ####### STATIC SVGs FOR STREAMERs BELOW ####### -->							
-							<div id="lirik_svg">
-								<!-- 
+                    function refreshTable() {
+                      $.ajax({
+                        url: "/refresh_sentiments",
+                        type: "get",
+                        data: "{}",
+                        success: function (data) {
+                          // $('#links').text(result); //insert text of test.php into your div
+                          console.log("-----> ", data);
+                          refresh_sentiments_using_d3(data);
+                          setTimeout(function () {
+                            refreshTable(); //this will send request again and again;
+                          }, 5000);
+                        },
+                      });
+                    }
+                  </script>
+                  <!-- <canvas id="chartjs-dashboard-line"></canvas> -->
+                  <!-- <div id="chart"></div> -->
+                  <style>
+                    div.video-background {
+                      z-index: 99999;
+                    }
+                    div.video-background video {
+                      z-index: 1 !important;
+                    }
+                  </style>
+                  <div class="ratio ratio-16x9">
+                    <video controls width="800" height="600" loop autoplay>
+                      <source src={{ url_for('static',
+                      filename="supcaitlin_twitch_recording_2022-07-15.mp4") }}
+                      type="video/mp4"> <source src={{ url_for('static',
+                      filename="supcaitlin_twitch_recording_2022-07-15 at
+                      1.17.29 AM_2.mp4") }} type="video/mp4"> <source src={{
+                      url_for('static',
+                      filename="criticalrole_twitch_recording_2022-07-15 at
+                      1.14.40 AM.mp4") }} type="video/mp4"> Your browser does
+                      not support the video tag.
+                    </video>
+                  </div>
+                  <svg width="800" height="200" id="svg1"></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col-xl-6 col-xxl-7"
+            id="historic_feed"
+            style="display: none"
+          >
+            <div class="card flex-fill w-100">
+              <div class="card-header">
+                <h3>Historic sentiments for our selected streams</h3>
+              </div>
+              <div class="card-body py-3">
+                <div id="video1">
+                  <video controls width="100%" height="75%" loop autoplay>
+                    <source src={{ url_for('static', filename="TwitchGif.mp4")
+                    }} type="video/mp4"> Your browser does not support the video
+                    tag.
+                  </video>
+                </div>
+                <div id="video2">
+                  <video controls width="100%" height="75%" loop autoplay>
+                    <source src={{ url_for('static', filename="TwitchGif_2.mp4")
+                    }} type="video/mp4"> Your browser does not support the video
+                    tag.
+                  </video>
+                </div>
+                <div id="video3">
+                  <video controls width="100%" height="75%" loop autoplay>
+                    <source src={{ url_for('static', filename="TwitchGif_3.mp4")
+                    }} type="video/mp4"> Your browser does not support the video
+                    tag.
+                  </video>
+                </div>
+
+                <div class="card-header">
+                  <h3>Detailed Breakdown of Stream</h3>
+                </div>
+            
+                <object type="image/+xml" data={{ url_for('static', filename="legend.svg") }}></object>
+                <!-- ####### STATIC SVGs FOR STREAMERs BELOW ####### -->
+                <!--				<div id="lirik_svg"> -->
+                <!-- 
 									These were the original ones manually made... beautiful but not useful for our analysis
 									from here: https://observablehq.com/@vbeohar/experimentation-for-w210-capstone-twitch-sentiments-grap
 									<div id="observablehq-chart-fbd47c6c"></div>
 									<div id="observablehq-mystyle-fbd47c6c"></div> 
 								-->
-								<div id="observablehq-chart-d047c6bc"></div>
+                <!--							<div id="observablehq-chart-d047c6bc"></div>
 								<div id="observablehq-mystyle-d047c6bc"></div>
 							</div>
 							<div id="sweetdreams_svg">
@@ -469,40 +643,35 @@
 							<div id="gmhikaru_svg">
 								<div id="observablehq-chart-be8d8888"></div>
 								<div id="observablehq-mystyle-be8d8888"></div>
-							</div>
+							</div> -->
+                <!-- ####### STATIC SVGs FOR STREAMERs  ####### -->
 
-							<!-- ####### STATIC SVGs FOR STREAMERs  ####### -->
+                <div class="card-header">
+                  <h3>Sentiment scores for last 2 weeks of livestream</h3>
+                </div>
+                <!-- <div id="observablehq-chart-3319f4c3"></div> VB commenting this out since we need only 14 days worth of sentiments -->
+                <div id="default_2week_svg">
+                  <div id="observablehq-chart-f868c6c8"></div>
+                </div>
+                <div id="lirik_2week_svg">
+                  <div id="observablehq-chart-f868c6c8"></div>
+                </div>
+                <div id="sweetdreams_2week_svg">
+                  <div id="observablehq-chart-8d913776"></div>
+                </div>
+                <div id="gmhikaru_2week_svg">
+                  <div id="observablehq-chart-1137147d"></div>
+                </div>
+                <div id="chenny323_2week_svg">
+                  <div id="observablehq-chart-965d74ea"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-							<div class="card-header">
-								<h3>Sentiment scores for last 2 weeks of livestream </h3>
-							</div>
-							<!-- <div id="observablehq-chart-3319f4c3"></div> VB commenting this out since we need only 14 days worth of sentiments --> 
-							<div id="default_2week_svg">
-								<div id="observablehq-chart-f868c6c8"></div>
-							</div>	
-							<div id="lirik_2week_svg">
-								<div id="observablehq-chart-f868c6c8"></div>
-							</div>	
-							<div id="sweetdreams_2week_svg">
-								<div id="observablehq-chart-8d913776"></div>
-							</div>	
-							<div id="gmhikaru_2week_svg">
-								<div id="observablehq-chart-1137147d"></div>
-							</div>	
-							<div id="chenny323_2week_svg">
-								<div id="observablehq-chart-965d74ea"></div>
-							</div>								
-							
-
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-
-<!-- Commenting out Browser usage card -->
-<!-- 			<div class="row">
+        <!-- Commenting out Browser usage card -->
+        <!-- 			<div class="row">
 				<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
 					<div class="card flex-fill w-100">
 						<div class="card-header">
@@ -537,8 +706,8 @@
 						</div>
 					</div>
 				</div> -->
-<!-- Commenting out most active streams card -->
-<!-- 				<div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+        <!-- Commenting out most active streams card -->
+        <!-- 				<div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
 					<div class="card flex-fill w-100">
 						<div class="card-header">
 
@@ -566,7 +735,7 @@
 				</div>
 			</div> -->
 
-<!-- 			<div class="row">
+        <!-- 			<div class="row">
 				<div class="col-12 col-lg-8 col-xxl-9 d-flex">
 					<div class="card flex-fill">
 						<div class="card-header">
@@ -663,12 +832,12 @@
 		</div>
 	</main> -->
 
-{% endblock content %}
+        {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
+        <!-- Specific Page JS goes HERE  -->
+        {% block javascripts %}
 
-<!-- 	<script>
+        <!-- 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
 			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
@@ -738,7 +907,7 @@
 			});
 		});
 	</script> -->
-<!-- 	<script>
+        <!-- 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			// Pie chart
 			new Chart(document.getElementById("chartjs-dashboard-pie"), {
@@ -766,7 +935,7 @@
 			});
 		});
 	</script> -->
-<!-- 	<script>
+        <!-- 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			// Bar chart
 			new Chart(document.getElementById("chartjs-dashboard-bar"), {
@@ -811,8 +980,8 @@
 		});
 	</script> -->
 
-	 <!-- map graph with coordinates highlighted -->
-	<!-- <script>
+        <!-- map graph with coordinates highlighted -->
+        <!-- <script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var markers = [{
 					coords: [31.230391, 121.473701],
@@ -888,9 +1057,9 @@
 		});
 	</script> -->
 
-	<!-- # adds d3 graph for Twitch listener real time graph(right now random numbers) -->
-	<script src="https://d3js.org/d3.v4.min.js"></script>
-	<!-- <script>
+        <!-- # adds d3 graph for Twitch listener real time graph(right now random numbers) -->
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <!-- <script>
 	function realTimeLineChart() {
 		var margin = {top: 20, right: 20, bottom: 20, left: 20},
 				width = 600,
@@ -1100,461 +1269,568 @@
 	});
 	</script> -->
 
-	
-	<script>
-		// https://bl.ocks.org/mbostock/1642874
-		// and https://bl.ocks.org/mbostock/3884955
-		var n = 40,
-			random = d3.randomNormal(0, .115);
-		var data = d3.range(n).map(random);
-		
-		var svg = d3.select("#svg1"),
-			margin = {top: 20, right: 20, bottom: 20, left: 40},
-			width = +svg.attr("width") - margin.left - margin.right,
-			height = +svg.attr("height") - margin.top - margin.bottom,
-			g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-		
-		var x = d3.scaleLinear()
-			.domain([0, n - 1])
-			.range([0, width]);
-		
-		var y = d3.scaleLinear()
-			.domain([-1, 1])
-			.range([height, 0]);
-		
-		var line = d3.line()
-			.x(function(d, i) { return x(i); })
-			.y(function(d, i) { return y(d); });
-		
-		g.append("defs").append("clipPath")
-			.attr("id", "clip")
-		.append("rect")
-			.attr("width", width)
-			.attr("height", height);
-
-		g.append("g")
-			.attr("class", "axis axis--x")
-			.attr("transform", "translate(0," + y(0) + ")")
-			.call(d3.axisBottom(x))
-			.append("line")
-    		.attr("x1", "100%");
-		
-		g.append("g")
-			.attr("class", "axis axis--y")
-			.call(d3.axisLeft(y));
-		
-		g.append("g")
-			.attr("clip-path", "url(#clip)")
-		.append("path")
-			.datum(data)
-			.attr("class", "line")
-		.transition()
-			.duration(500)
-			.ease(d3.easeLinear)
-			.on("start", tick);
-
-		function tick() {
-				// Push a new data point onto the back.
-				data.push(random());
-				// data.push(data_point);
-				
-				// Redraw the line.
-				d3.select(this)
-					.attr("d", line)
-					.attr("transform", null);
-				
-				// Slide it to the left.
-				d3.active(this)
-					.attr("transform", "translate(" + x(-1) + ",0)")
-					.transition()
-					.on("start", tick);
-				
-				// Pop the old data point off the front.
-				data.shift();
-			}
-
-
-
-		////////////////////////////////////////////////////////////
-		////////////////////// Set-up  /////////////////////////////
-		////////////////////////////////////////////////////////////
-		const margin_chart = {
-		left: 80,
-		right: 80,
-		top: 30,
-		bottom: 30
-		};
-
-		//Actual graph smaller than svg container 
-		var width = $('#chart').width() - margin_chart.left - margin_chart.right;
-		var height = $('#chart').height() - margin_chart.top - margin_chart.bottom;
-
-		//yAxis
-		const yDomain = [0, 70];
-		const yTickValues = [0, 10, 20, 30, 40, 50, 60, 70];
-
-		const TIME_INTERVAL = 1000;
-
-		//xAxis domain-> 10 seconds 
-		const originalTime1 = "1970-01-01T00:00:00",
-		originalTime2 = "1970-01-01T00:00:10";
-
-		var date1 = new Date(originalTime1).getTime(),
-		date2 = new Date(originalTime2).getTime();
-
-		////////////////////////////////////////////////////////////
-		///////////////////////// SVG //////////////////////////////
-		//////////////////////////////////////////////////////////// 
-
-		const svg_chart = d3.select("#chart")
-		.append("svg")
-		.attr("width", width + margin_chart.left + margin_chart.right)
-		.attr("height", height + margin_chart.top + margin_chart.bottom);
-
-		const g_chart = svg_chart.append("g")
-		.attr("transform", "translate(" + margin_chart.left + ", " + margin_chart.top + ")");
-
-		////////////////////////////////////////////////////////////
-		///////////////////// Axes & Scales ////////////////////////
-		////////////////////////////////////////////////////////////
-
-		var xAxisGroup = g_chart.append("g")
-		.attr("class", "x-axis");
-
-		// HACK: draw white rectangle over the fading axis
-		g_chart.append('rect')
-		.attr('fill', 'white')
-		.attr('width', margin_chart.left)
-		.attr('height', margin_chart.bottom)
-		.attr('x', -margin_chart.left)
-		.attr('y', height - margin_chart.bottom);
-
-		var yAxisGroup = g_chart.append("g")
-		.attr("class", "y-axis");
-
-		//Dynamic
-		var xScale = d3.scaleTime();
-
-		//Fixed
-		var yScale = d3.scaleLinear()
-		.domain([yDomain[0], yDomain[1]])
-		.range([height - margin_chart.bottom, 0]);
-
-		const xAxis = d3.axisBottom(xScale)
-		.ticks(d3.timeSecond.every(1))
-		.tickSizeInner(15)
-		.tickFormat(d3.timeFormat("%M:%S"));
-
-		const yAxis = d3.axisLeft()
-		.scale(yScale)
-		.tickValues(yTickValues)
-		.tickFormat(d3.format(".0f"));
-
-		////////////////////////////////////////////////////////////
-		/////////////////////// Function ///////////////////////////
-		////////////////////////////////////////////////////////////
-
-		function draw() {
-
-		//Update xAxis scale
-		xScale.domain([date1, date2])
-			.range([0, width]);
-
-		//Call axes
-		xAxisGroup.attr("transform", "translate(0," + (height - margin_chart.bottom) + ")")
-			.transition()
-			.duration(1000)
-			// See here for the change:
-			.ease(d3.easeLinear)
-			.call(xAxis);
-
-		yAxisGroup.call(yAxis);
-
-		date1 += TIME_INTERVAL;
-		date2 += TIME_INTERVAL;
-
-		};
-
-		////////////////////////////////////////////////////////////
-		///////////////////////// Main /////////////////////////////
-		////////////////////////////////////////////////////////////
-		$(document).ready(function() {
-			setInterval(draw, 3000);
-		});
-
-		</script>
-		<script>
-
-			$(document).ready(function () {
-				intro_modal.style.display = "block"; // call modal here
-				$("#sortable_ul").hide();
-
-				$('#submitBtn').click(function () {
-					var e = document.getElementById("streamer_choose");
-					var strUser = e.value;
-					var text = e.options[e.selectedIndex].text;				
-					console.log('----> ', strUser)
-					console.log('----> ', text)
-
-					var eDate = document.getElementById("streamer_date");
-					var strDate = eDate.value;
-					var strDateText = eDate.options[eDate.selectedIndex].text;				
-					console.log('----> ', strDate)
-					console.log('----> ', strDateText)
-
-					var radio_selected1 = document.getElementById("btnradio1");
-					var radio_selected1_val = radio_selected1.value;
-					console.log('radio_selected1_val ----> ', radio_selected1_val)
-
-					var radio_selected2 = document.getElementById("btnradio2");
-					var radio_selected2_val = radio_selected2.value;
-					console.log('radio_selected2_val ----> ', radio_selected2_val)
-
-					if (strUser=='' || strDate==''){
-						alert('Select both streamer and date!');
-						return;
-
-					}
-
-					if ($(radio_selected1).is(':checked')) {
-							$("#live_feed").show();
-							$("#historic_feed").hide();
-							$("#sortable_ul").hide();
-
-							$("#average_viewers").html("");
-							$("#average_viewers").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');
-
-							$("#followers_change").html("");
-							$("#followers_change").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');
-
-							$("#subscriber_change").html("");
-							// $("#subscriber_change").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');
-							
-							$("#avg_sentiment").html("");
-							$("#avg_sentiment").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');
-							
-							$("#avg_chatters").html("");
-							$("#avg_chatters").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');
-
-							$("#total_messages").html("");
-							$("#total_messages").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');	
-
-							$("#streamer_visitors_earnings").html("");
-							$("#streamer_visitors_earnings").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');	
-
-							$("#streamer_visitors_earnings_perc").html("");
-							// $("#streamer_visitors_earnings_perc").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');	
-
-							$("#rec_engine_output_table").html("");
-							$("#rec_engine_output_table").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Go to the recordings tab to access your recommended streams based your history</p>');	
-
-							modal.style.display = "block"; // call modal here
-
-							setInterval(function(){ 
-								//code goes here that will be run every 5 seconds.    
-								$.ajax({
-										url: "/read_random_sentiments",
-										type: "get",
-										data: {},
-										dataType:"JSON",
-									success: function(response) {
-										console.log(response[0].sentiment_display);
-										console.log(response[0].prob_score);
-										$("#read_random_sentiments_label").html(response[0].sentiment_display);
-										$("#read_random_sentiments_user").html(response[0].user);
-										$("#read_random_sentiments_value").html(response[0].pred_class);
-										data.push(response[0].prob_score);
-										// $("#data").html(data[0].sentiment_display);
-									},
-									error: function(xhr) {
-									//Do Something to handle error
-									}
-								});
-							}, 3000);							
-
-					}					
-
-					if ($(radio_selected2).is(':checked')) {
-							$("#live_feed").hide();
-							$("#historic_feed").show();
-							$("#sortable_ul").show();
-							
-
-							call_streamer_func('/average_viewers', strUser, strDate, '#average_viewers');
-							call_streamer_func('/followers_change', strUser, strDate, '#followers_change');
-							call_streamer_func('/pct_follower_change', strUser, strDate, '#pct_follower_change');
-							call_streamer_func('/subscriber_change', strUser, strDate, '#subscriber_change');
-							call_streamer_func('/pct_subscriber_change', strUser, strDate, '#pct_subscriber_change');
-							call_streamer_func('/avg_sentiment', strUser, strDate, '#avg_sentiment');
-							call_streamer_func('/avg_chatters', strUser, strDate, '#avg_chatters');
-							call_streamer_func('/total_messages', strUser, strDate, '#total_messages');
-							call_streamer_func('/streamer_visitors_earnings', strUser, strDate, '#streamer_visitors_earnings');
-							call_streamer_func('/streamer_visitors_earnings_perc', strUser, strDate, '#streamer_visitors_earnings_perc');
-							call_streamer_func('/chat_percentages', strUser, strDate, '#chat_percentages');
-							// call_streamer_func('/rec_engine_output_table', strUser, strDate, '#rec_engine_output_table');
-							$("#rec_engine_output_table").html("");
-
-							if(text=='sweetdreams'){
-								$("#lirik_svg").hide();
-								$("#chenny323_svg").hide();
-								$("#shivfps_svg").hide();
-								$("#sweetdreams_svg").show();
-								$("#gmhikaru_svg").hide();
-
-								$("#video1").hide();
-								$("#video2").hide();
-								$("#video3").show();
-
-								$("#sweetdreams_2week_svg").show();
-								$("#gmhikaru_2week_svg").hide();
-								$("#default_2week_svg").hide();
-								$("#chenny323_2week_svg").hide();
-								$("#lirik_2week_svg").hide();
-							}else if(text=='chenny323'){
-								$("#lirik_svg").hide();
-								$("#sweetdreams_svg").hide();
-								$("#chenny323_svg").show();
-								$("#shivfps_svg").hide();
-								$("#gmhikaru_svg").hide();
-
-								$("#video1").hide();
-								$("#video2").show();
-								$("#video3").hide();
-
-								$("#sweetdreams_2week_svg").hide();
-								$("#gmhikaru_2week_svg").hide();
-								$("#default_2week_svg").hide();
-								$("#chenny323_2week_svg").show();
-								$("#lirik_2week_svg").hide();
-							}else if(text=='shivfps'){
-								$("#lirik_svg").hide();
-								$("#sweetdreams_svg").hide();
-								$("#chenny323_svg").hide();
-								$("#shivfps_svg").show();
-								$("#gmhikaru_svg").hide();
-
-								$("#video1").show();
-								$("#video2").hide();
-								$("#video3").hide();
-
-								$("#sweetdreams_2week_svg").hide();
-								$("#gmhikaru_2week_svg").hide();
-								$("#default_2week_svg").show();
-								$("#chenny323_2week_svg").hide();
-								$("#lirik_2week_svg").hide();
-							}else if(text=='gmhikaru'){
-								$("#lirik_svg").hide();
-								$("#sweetdreams_svg").hide();
-								$("#chenny323_svg").hide();
-								$("#shivfps_svg").hide();
-								$("#gmhikaru_svg").show();
-
-								$("#video1").hide();
-								$("#video2").show();
-								$("#video3").hide();
-
-								$("#sweetdreams_2week_svg").hide();
-								$("#gmhikaru_2week_svg").show();
-								$("#default_2week_svg").hide();
-								$("#chenny323_2week_svg").hide();
-								$("#lirik_2week_svg").hide();
-							}else {
-								$("#lirik_svg").show();
-								$("#sweetdreams_svg").hide();
-								$("#chenny323_svg").hide();
-								$("#shivfps_svg").hide();
-								$("#gmhikaru_svg").hide();
-
-								$("#video1").show();
-								$("#video2").hide();
-								$("#video3").hide();
-
-								$("#sweetdreams_2week_svg").hide();
-								$("#gmhikaru_2week_svg").hide();
-								$("#default_2week_svg").show();
-								$("#chenny323_2week_svg").hide();
-								$("#lirik_2week_svg").hide();
-							}
-							
-							setInterval(function(){ 
-								//code goes here that will be run every 5 seconds.    
-								$.ajax({
-										url: "/read_random_sentiments",
-										type: "get",
-										data: {},
-										dataType:"JSON",
-									success: function(response) {
-										// console.log(response);
-										console.log(response[0].sentiment_display);
-										console.log(response[0].prob_score);
-										$("#read_random_sentiments_label").html(response[0].sentiment_display);
-										$("#read_random_sentiments_user").html(response[0].user);
-										$("#read_random_sentiments_value").html(response[0].pred_class);
-										data.push(response[0].prob_score);
-										// $("#data").html(data[0].sentiment_display);
-									},
-									error: function(xhr) {
-									//Do Something to handle error
-									}
-								});
-							}, 3000);
-					}
-					
-				});
-
-
-				$('#recEngineBtn').click(function () {
-					var idsInOrder = [];
-					$("ul#sortable1 li").each(function() {  idsInOrder.push($(this).attr('id')) }); 
-					var str_sorted_choices = idsInOrder.join();
-					// alert(idsInOrder.join('\n'));
-					// alert(str_sorted_choices);
-					var e = document.getElementById("streamer_choose");
-					var streamer_id = e.value;
-					var eDate = document.getElementById("streamer_date");
-					var streamer_date = eDate.value;
-					$("#rec_engine_output_table").html("");
-					$.ajax({
-								url: '/rec_engine_output_table',
-								type: "get",
-								data: {streamer_choose_id: streamer_id, streamer_choose_dt: streamer_date, sorted_choices: str_sorted_choices},
-							success: function(response) {
-								$("#rec_engine_output_table").html(response);
-							},
-							error: function(xhr) {
-								//Do Something to handle error
-							}
-						});						
-				});
-
-			});
-
-
-			function call_streamer_func(api_url, streamer_id, streamer_date, div_to_refresh){
-					console.log('inside streamer function');
-					$(div_to_refresh).html("");
-					$.ajax({
-							url: api_url,
-							type: "get",
-							data: {streamer_choose_id: streamer_id, streamer_choose_dt: streamer_date},
-						success: function(response) {
-							$(div_to_refresh).html(response);
-						},
-						error: function(xhr) {
-							//Do Something to handle error
-						}
-					});				
-			}
-
-		$(function() {
-			$( "#sortable1" ).sortable({
-			connectWith: ".connectedSortable"
-			}).disableSelection();
-		});
-
-		</script>	
-		
-		<!-- This was the original stacked line chart made for analysis
+        <script>
+          // https://bl.ocks.org/mbostock/1642874
+          // and https://bl.ocks.org/mbostock/3884955
+          var n = 40,
+            random = d3.randomNormal(0, 0.115);
+          var data = d3.range(n).map(random);
+
+          var svg = d3.select("#svg1"),
+            margin = { top: 20, right: 20, bottom: 20, left: 40 },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom,
+            g = svg
+              .append("g")
+              .attr(
+                "transform",
+                "translate(" + margin.left + "," + margin.top + ")"
+              );
+
+          var x = d3
+            .scaleLinear()
+            .domain([0, n - 1])
+            .range([0, width]);
+
+          var y = d3.scaleLinear().domain([-1, 1]).range([height, 0]);
+
+          var line = d3
+            .line()
+            .x(function (d, i) {
+              return x(i);
+            })
+            .y(function (d, i) {
+              return y(d);
+            });
+
+          g.append("defs")
+            .append("clipPath")
+            .attr("id", "clip")
+            .append("rect")
+            .attr("width", width)
+            .attr("height", height);
+
+          g.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + y(0) + ")")
+            .call(d3.axisBottom(x))
+            .append("line")
+            .attr("x1", "100%");
+
+          g.append("g").attr("class", "axis axis--y").call(d3.axisLeft(y));
+
+          g.append("g")
+            .attr("clip-path", "url(#clip)")
+            .append("path")
+            .datum(data)
+            .attr("class", "line")
+            .transition()
+            .duration(500)
+            .ease(d3.easeLinear)
+            .on("start", tick);
+
+          function tick() {
+            // Push a new data point onto the back.
+            data.push(random());
+            // data.push(data_point);
+
+            // Redraw the line.
+            d3.select(this).attr("d", line).attr("transform", null);
+
+            // Slide it to the left.
+            d3.active(this)
+              .attr("transform", "translate(" + x(-1) + ",0)")
+              .transition()
+              .on("start", tick);
+
+            // Pop the old data point off the front.
+            data.shift();
+          }
+
+          ////////////////////////////////////////////////////////////
+          ////////////////////// Set-up  /////////////////////////////
+          ////////////////////////////////////////////////////////////
+          const margin_chart = {
+            left: 80,
+            right: 80,
+            top: 30,
+            bottom: 30,
+          };
+
+          //Actual graph smaller than svg container
+          var width =
+            $("#chart").width() - margin_chart.left - margin_chart.right;
+          var height =
+            $("#chart").height() - margin_chart.top - margin_chart.bottom;
+
+          //yAxis
+          const yDomain = [0, 70];
+          const yTickValues = [0, 10, 20, 30, 40, 50, 60, 70];
+
+          const TIME_INTERVAL = 1000;
+
+          //xAxis domain-> 10 seconds
+          const originalTime1 = "1970-01-01T00:00:00",
+            originalTime2 = "1970-01-01T00:00:10";
+
+          var date1 = new Date(originalTime1).getTime(),
+            date2 = new Date(originalTime2).getTime();
+
+          ////////////////////////////////////////////////////////////
+          ///////////////////////// SVG //////////////////////////////
+          ////////////////////////////////////////////////////////////
+
+          const svg_chart = d3
+            .select("#chart")
+            .append("svg")
+            .attr("width", width + margin_chart.left + margin_chart.right)
+            .attr("height", height + margin_chart.top + margin_chart.bottom);
+
+          const g_chart = svg_chart
+            .append("g")
+            .attr(
+              "transform",
+              "translate(" + margin_chart.left + ", " + margin_chart.top + ")"
+            );
+
+          ////////////////////////////////////////////////////////////
+          ///////////////////// Axes & Scales ////////////////////////
+          ////////////////////////////////////////////////////////////
+
+          var xAxisGroup = g_chart.append("g").attr("class", "x-axis");
+
+          // HACK: draw white rectangle over the fading axis
+          g_chart
+            .append("rect")
+            .attr("fill", "white")
+            .attr("width", margin_chart.left)
+            .attr("height", margin_chart.bottom)
+            .attr("x", -margin_chart.left)
+            .attr("y", height - margin_chart.bottom);
+
+          var yAxisGroup = g_chart.append("g").attr("class", "y-axis");
+
+          //Dynamic
+          var xScale = d3.scaleTime();
+
+          //Fixed
+          var yScale = d3
+            .scaleLinear()
+            .domain([yDomain[0], yDomain[1]])
+            .range([height - margin_chart.bottom, 0]);
+
+          const xAxis = d3
+            .axisBottom(xScale)
+            .ticks(d3.timeSecond.every(1))
+            .tickSizeInner(15)
+            .tickFormat(d3.timeFormat("%M:%S"));
+
+          const yAxis = d3
+            .axisLeft()
+            .scale(yScale)
+            .tickValues(yTickValues)
+            .tickFormat(d3.format(".0f"));
+
+          ////////////////////////////////////////////////////////////
+          /////////////////////// Function ///////////////////////////
+          ////////////////////////////////////////////////////////////
+
+          function draw() {
+            //Update xAxis scale
+            xScale.domain([date1, date2]).range([0, width]);
+
+            //Call axes
+            xAxisGroup
+              .attr(
+                "transform",
+                "translate(0," + (height - margin_chart.bottom) + ")"
+              )
+              .transition()
+              .duration(1000)
+              // See here for the change:
+              .ease(d3.easeLinear)
+              .call(xAxis);
+
+            yAxisGroup.call(yAxis);
+
+            date1 += TIME_INTERVAL;
+            date2 += TIME_INTERVAL;
+          }
+
+          ////////////////////////////////////////////////////////////
+          ///////////////////////// Main /////////////////////////////
+          ////////////////////////////////////////////////////////////
+          $(document).ready(function () {
+            setInterval(draw, 3000);
+          });
+        </script>
+        <script>
+          $(document).ready(function () {
+            intro_modal.style.display = "block"; // call modal here
+            $("#sortable_ul").hide();
+
+            $("#submitBtn").click(function () {
+              var e = document.getElementById("streamer_choose");
+              var strUser = e.value;
+              var text = e.options[e.selectedIndex].text;
+              console.log("----> ", strUser);
+              console.log("----> ", text);
+
+              var eDate = document.getElementById("streamer_date");
+              var strDate = eDate.value;
+              var strDateText = eDate.options[eDate.selectedIndex].text;
+              console.log("----> ", strDate);
+              console.log("----> ", strDateText);
+
+              var radio_selected1 = document.getElementById("btnradio1");
+              var radio_selected1_val = radio_selected1.value;
+              console.log("radio_selected1_val ----> ", radio_selected1_val);
+
+              var radio_selected2 = document.getElementById("btnradio2");
+              var radio_selected2_val = radio_selected2.value;
+              console.log("radio_selected2_val ----> ", radio_selected2_val);
+
+              if (strUser == "" || strDate == "") {
+                alert("Select both streamer and date!");
+                return;
+              }
+
+              if ($(radio_selected1).is(":checked")) {
+                $("#live_feed").show();
+                $("#historic_feed").hide();
+                $("#sortable_ul").hide();
+
+                $("#average_viewers").html("");
+                $("#average_viewers").html(
+                  '<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>'
+                );
+
+                $("#followers_change").html("");
+                $("#followers_change").html(
+                  '<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>'
+                );
+
+                $("#subscriber_change").html("");
+                // $("#subscriber_change").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');
+
+                $("#avg_sentiment").html("");
+                $("#avg_sentiment").html(
+                  '<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>'
+                );
+
+                $("#avg_chatters").html("");
+                $("#avg_chatters").html(
+                  '<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>'
+                );
+
+                $("#total_messages").html("");
+                $("#total_messages").html(
+                  '<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>'
+                );  
+
+				$("#chat_summary").html("");
+                $("#chat_summary").html(
+                  '<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>'
+                ); 
+
+                $("#streamer_visitors_earnings").html("");
+                $("#streamer_visitors_earnings").html(
+                  '<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>'
+                );
+
+                $("#streamer_visitors_earnings_perc").html("");
+                // $("#streamer_visitors_earnings_perc").html('<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Not available in livestream</p>');
+
+                $("#rec_engine_output_table").html("");
+                $("#rec_engine_output_table").html(
+                  '<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;color:blue;">Go to the recordings tab to access your recommended streams based your history</p>'
+                );
+
+                modal.style.display = "block"; // call modal here
+
+                setInterval(function () {
+                  //code goes here that will be run every 5 seconds.
+                  $.ajax({
+                    url: "/read_random_sentiments",
+                    type: "get",
+                    data: {},
+                    dataType: "JSON",
+                    success: function (response) {
+                      console.log(response[0].sentiment_display);
+                      console.log(response[0].prob_score);
+                      $("#read_random_sentiments_label").html(
+                        response[0].sentiment_display
+                      );
+                      $("#read_random_sentiments_user").html(response[0].user);
+                      $("#read_random_sentiments_value").html(
+                        response[0].pred_class
+                      );
+                      data.push(response[0].prob_score);
+                      // $("#data").html(data[0].sentiment_display);
+                    },
+                    error: function (xhr) {
+                      //Do Something to handle error
+                    },
+                  });
+                }, 3000);
+              }
+
+              if ($(radio_selected2).is(":checked")) {
+                $("#live_feed").hide();
+                $("#historic_feed").show();
+                $("#sortable_ul").show();
+
+                call_streamer_func(
+                  "/average_viewers",
+                  strUser,
+                  strDate,
+                  "#average_viewers"
+                );
+                call_streamer_func(
+                  "/followers_change",
+                  strUser,
+                  strDate,
+                  "#followers_change"
+                );
+                call_streamer_func(
+                  "/pct_follower_change",
+                  strUser,
+                  strDate,
+                  "#pct_follower_change"
+                );
+                call_streamer_func(
+                  "/subscriber_change",
+                  strUser,
+                  strDate,
+                  "#subscriber_change"
+                );
+                call_streamer_func(
+                  "/pct_subscriber_change",
+                  strUser,
+                  strDate,
+                  "#pct_subscriber_change"
+                );
+                call_streamer_func(
+                  "/avg_sentiment",
+                  strUser,
+                  strDate,
+                  "#avg_sentiment"
+                );
+                call_streamer_func(
+                  "/avg_chatters",
+                  strUser,
+                  strDate,
+                  "#avg_chatters"
+                );
+                call_streamer_func(
+                  "/total_messages",
+                  strUser,
+                  strDate,
+                  "#total_messages"
+                );
+				call_streamer_func(
+                  "/chat_summary",
+                  strUser,
+                  strDate,
+                  "#chat_summary"
+                );
+                call_streamer_func(
+                  "/streamer_visitors_earnings",
+                  strUser,
+                  strDate,
+                  "#streamer_visitors_earnings"
+                );
+                call_streamer_func(
+                  "/streamer_visitors_earnings_perc",
+                  strUser,
+                  strDate,
+                  "#streamer_visitors_earnings_perc"
+                );
+                call_streamer_func(
+                  "/chat_percentages",
+                  strUser,
+                  strDate,
+                  "#chat_percentages"
+                );
+                // call_streamer_func('/rec_engine_output_table', strUser, strDate, '#rec_engine_output_table');
+                $("#rec_engine_output_table").html("");
+
+                if (text == "sweetdreams") {
+                  $("#lirik_svg").hide();
+                  $("#chenny323_svg").hide();
+                  $("#shivfps_svg").hide();
+                  $("#sweetdreams_svg").show();
+                  $("#gmhikaru_svg").hide();
+
+                  $("#video1").hide();
+                  $("#video2").hide();
+                  $("#video3").show();
+
+                  $("#sweetdreams_2week_svg").show();
+                  $("#gmhikaru_2week_svg").hide();
+                  $("#default_2week_svg").hide();
+                  $("#chenny323_2week_svg").hide();
+                  $("#lirik_2week_svg").hide();
+                } else if (text == "chenny323") {
+                  $("#lirik_svg").hide();
+                  $("#sweetdreams_svg").hide();
+                  $("#chenny323_svg").show();
+                  $("#shivfps_svg").hide();
+                  $("#gmhikaru_svg").hide();
+
+                  $("#video1").hide();
+                  $("#video2").show();
+                  $("#video3").hide();
+
+                  $("#sweetdreams_2week_svg").hide();
+                  $("#gmhikaru_2week_svg").hide();
+                  $("#default_2week_svg").hide();
+                  $("#chenny323_2week_svg").show();
+                  $("#lirik_2week_svg").hide();
+                } else if (text == "shivfps") {
+                  $("#lirik_svg").hide();
+                  $("#sweetdreams_svg").hide();
+                  $("#chenny323_svg").hide();
+                  $("#shivfps_svg").show();
+                  $("#gmhikaru_svg").hide();
+
+                  $("#video1").show();
+                  $("#video2").hide();
+                  $("#video3").hide();
+
+                  $("#sweetdreams_2week_svg").hide();
+                  $("#gmhikaru_2week_svg").hide();
+                  $("#default_2week_svg").show();
+                  $("#chenny323_2week_svg").hide();
+                  $("#lirik_2week_svg").hide();
+                } else if (text == "gmhikaru") {
+                  $("#lirik_svg").hide();
+                  $("#sweetdreams_svg").hide();
+                  $("#chenny323_svg").hide();
+                  $("#shivfps_svg").hide();
+                  $("#gmhikaru_svg").show();
+
+                  $("#video1").hide();
+                  $("#video2").show();
+                  $("#video3").hide();
+
+                  $("#sweetdreams_2week_svg").hide();
+                  $("#gmhikaru_2week_svg").show();
+                  $("#default_2week_svg").hide();
+                  $("#chenny323_2week_svg").hide();
+                  $("#lirik_2week_svg").hide();
+                } else {
+                  $("#lirik_svg").show();
+                  $("#sweetdreams_svg").hide();
+                  $("#chenny323_svg").hide();
+                  $("#shivfps_svg").hide();
+                  $("#gmhikaru_svg").hide();
+
+                  $("#video1").show();
+                  $("#video2").hide();
+                  $("#video3").hide();
+
+                  $("#sweetdreams_2week_svg").hide();
+                  $("#gmhikaru_2week_svg").hide();
+                  $("#default_2week_svg").show();
+                  $("#chenny323_2week_svg").hide();
+                  $("#lirik_2week_svg").hide();
+                }
+
+                setInterval(function () {
+                  //code goes here that will be run every 5 seconds.
+                  $.ajax({
+                    url: "/read_random_sentiments",
+                    type: "get",
+                    data: {},
+                    dataType: "JSON",
+                    success: function (response) {
+                      // console.log(response);
+                      console.log(response[0].sentiment_display);
+                      console.log(response[0].prob_score);
+                      $("#read_random_sentiments_label").html(
+                        response[0].sentiment_display
+                      );
+                      $("#read_random_sentiments_user").html(response[0].user);
+                      $("#read_random_sentiments_value").html(
+                        response[0].pred_class
+                      );
+                      data.push(response[0].prob_score);
+                      // $("#data").html(data[0].sentiment_display);
+                    },
+                    error: function (xhr) {
+                      //Do Something to handle error
+                    },
+                  });
+                }, 3000);
+              }
+            });
+
+            $("#recEngineBtn").click(function () {
+              var idsInOrder = [];
+              $("ul#sortable1 li").each(function () {
+                idsInOrder.push($(this).attr("id"));
+              });
+              var str_sorted_choices = idsInOrder.join();
+              // alert(idsInOrder.join('\n'));
+              // alert(str_sorted_choices);
+              var e = document.getElementById("streamer_choose");
+              var streamer_id = e.value;
+              var eDate = document.getElementById("streamer_date");
+              var streamer_date = eDate.value;
+              $("#rec_engine_output_table").html("");
+              $.ajax({
+                url: "/rec_engine_output_table",
+                type: "get",
+                data: {
+                  streamer_choose_id: streamer_id,
+                  streamer_choose_dt: streamer_date,
+                  sorted_choices: str_sorted_choices,
+                },
+                success: function (response) {
+                  $("#rec_engine_output_table").html(response);
+                },
+                error: function (xhr) {
+                  //Do Something to handle error
+                },
+              });
+            });
+          });
+
+          function call_streamer_func(
+            api_url,
+            streamer_id,
+            streamer_date,
+            div_to_refresh
+          ) {
+            console.log("inside streamer function");
+            $(div_to_refresh).html("");
+            $.ajax({
+              url: api_url,
+              type: "get",
+              data: {
+                streamer_choose_id: streamer_id,
+                streamer_choose_dt: streamer_date,
+              },
+              success: function (response) {
+                $(div_to_refresh).html(response);
+              },
+              error: function (xhr) {
+                //Do Something to handle error
+              },
+            });
+          }
+
+          $(function () {
+            $("#sortable1")
+              .sortable({
+                connectWith: ".connectedSortable",
+              })
+              .disableSelection();
+          });
+        </script>
+
+        <!-- This was the original stacked line chart made for analysis
 			https://observablehq.com/@vbeohar/experimentation-for-w210-capstone-twitch-sentiments-grap
 			<script type="module">
 				import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
@@ -1566,150 +1842,223 @@
 			</script> 
 		-->
 
-		<script type="module">
-		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-		import define from "https://api.observablehq.com/@vbeohar/line-chart-tooltip-v2.js?v=3";
-		new Runtime().module(define, name => {
-		if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-f868c6c8"));
-		return ["focus"].includes(name);
-		});
-		</script>		
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/line-chart-tooltip-v2.js?v=3";
+          new Runtime().module(define, (name) => {
+            if (name === "chart")
+              return new Inspector(
+                document.querySelector("#observablehq-chart-f868c6c8")
+              );
+            return ["focus"].includes(name);
+          });
+        </script>
 
-		<script type="module">
-		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-		import define from "https://api.observablehq.com/@vbeohar/creating-legends-for-charts-forked-to-create-legend-for-my-w.js?v=3";
-		new Runtime().module(define, Inspector.into("#observablehq-ed107dc9"));
-		</script>
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/creating-legends-for-charts-forked-to-create-legend-for-my-w.js?v=3";
+          new Runtime().module(
+            define,
+            Inspector.into("#observablehq-ed107dc9")
+          );
+        </script>
 
-		<!-- ####### STATIC SVGs FOR STREAMERs  ####### -->
-		<!-- sweetdreams -->
-		<script type="module">
-			import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-			import define from "https://api.observablehq.com/@vbeohar/w210_streamer_chart_sample_1.js?v=3";
-			new Runtime().module(define, name => {
-			if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-d368df83"));
-			if (name === "mystyle") return new Inspector(document.querySelector("#observablehq-mystyle-d368df83"));
-			});
-		</script>
-		<script type="module">
-			import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-			import define from "https://api.observablehq.com/@vbeohar/line-chart-tooltip-sweetdreams-w210-capstone.js?v=3";
-			new Runtime().module(define, name => {
-				if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-8d913776"));
-				return ["focus"].includes(name);
-			});
-		</script>
+        <!-- ####### STATIC SVGs FOR STREAMERs  ####### -->
+        <!-- sweetdreams -->
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/w210_streamer_chart_sample_1.js?v=3";
+          new Runtime().module(define, (name) => {
+            if (name === "chart")
+              return new Inspector(
+                document.querySelector("#observablehq-chart-d368df83")
+              );
+            if (name === "mystyle")
+              return new Inspector(
+                document.querySelector("#observablehq-mystyle-d368df83")
+              );
+          });
+        </script>
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/line-chart-tooltip-sweetdreams-w210-capstone.js?v=3";
+          new Runtime().module(define, (name) => {
+            if (name === "chart")
+              return new Inspector(
+                document.querySelector("#observablehq-chart-8d913776")
+              );
+            return ["focus"].includes(name);
+          });
+        </script>
 
+        <!-- chenny323 -->
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/chenny323twitch_streamer.js?v=3";
+          new Runtime().module(define, (name) => {
+            if (name === "chart")
+              return new Inspector(
+                document.querySelector("#observablehq-chart-ef230ae4")
+              );
+            if (name === "mystyle")
+              return new Inspector(
+                document.querySelector("#observablehq-mystyle-ef230ae4")
+              );
+          });
+        </script>
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/line-chart-tooltip-chenny323-w210-capstone.js?v=3";
+          new Runtime().module(define, (name) => {
+            if (name === "chart")
+              return new Inspector(
+                document.querySelector("#observablehq-chart-965d74ea")
+              );
+            return ["focus"].includes(name);
+          });
+        </script>
 
-		<!-- chenny323 -->
-		<script type="module">
-			import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-			import define from "https://api.observablehq.com/@vbeohar/chenny323twitch_streamer.js?v=3";
-			new Runtime().module(define, name => {
-			if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-ef230ae4"));
-			if (name === "mystyle") return new Inspector(document.querySelector("#observablehq-mystyle-ef230ae4"));
-			});
-		</script>
-		<script type="module">
-			import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-			import define from "https://api.observablehq.com/@vbeohar/line-chart-tooltip-chenny323-w210-capstone.js?v=3";
-			new Runtime().module(define, name => {
-			if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-965d74ea"));
-			return ["focus"].includes(name);
-			});
-		</script>
+        <!-- shivfps -->
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/shivfps_streamer_twitch.js?v=3";
+          new Runtime().module(define, (name) => {
+            if (name === "chart")
+              return new Inspector(
+                document.querySelector("#observablehq-chart-ba6c7733")
+              );
+            if (name === "mystyle")
+              return new Inspector(
+                document.querySelector("#observablehq-mystyle-ba6c7733")
+              );
+          });
+        </script>
 
+        <!-- gmhikaru -->
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/gmhikaru-streamer-static-svg-line-chart-for-w210.js?v=3";
+          new Runtime().module(define, (name) => {
+            if (name === "chart")
+              return new Inspector(
+                document.querySelector("#observablehq-chart-be8d8888")
+              );
+            if (name === "mystyle")
+              return new Inspector(
+                document.querySelector("#observablehq-mystyle-be8d8888")
+              );
+          });
+        </script>
 
-		<!-- shivfps -->
-		<script type="module">
-			import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-			import define from "https://api.observablehq.com/@vbeohar/shivfps_streamer_twitch.js?v=3";
-			new Runtime().module(define, name => {
-			if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-ba6c7733"));
-			if (name === "mystyle") return new Inspector(document.querySelector("#observablehq-mystyle-ba6c7733"));
-			});
-		</script>
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/line-chart-tooltip-gmhikaru-w210-capstone.js?v=3";
+          new Runtime().module(define, (name) => {
+            if (name === "chart")
+              return new Inspector(
+                document.querySelector("#observablehq-chart-1137147d")
+              );
+            return ["focus"].includes(name);
+          });
+        </script>
 
-		<!-- gmhikaru -->
-		<script type="module">
-			import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-			import define from "https://api.observablehq.com/@vbeohar/gmhikaru-streamer-static-svg-line-chart-for-w210.js?v=3";
-			new Runtime().module(define, name => {
-			if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-be8d8888"));
-			if (name === "mystyle") return new Inspector(document.querySelector("#observablehq-mystyle-be8d8888"));
-			});
-		</script>
+        <!-- lirik -->
+        <script type="module">
+          import {
+            Runtime,
+            Inspector,
+          } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/@vbeohar/lirik-streamer-static-svg-line-chart-for-w210.js?v=3";
+          new Runtime().module(define, (name) => {
+            if (name === "chart")
+              return new Inspector(
+                document.querySelector("#observablehq-chart-d047c6bc")
+              );
+            if (name === "mystyle")
+              return new Inspector(
+                document.querySelector("#observablehq-mystyle-d047c6bc")
+              );
+          });
+        </script>
 
-		<script type="module">
-			import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-			import define from "https://api.observablehq.com/@vbeohar/line-chart-tooltip-gmhikaru-w210-capstone.js?v=3";
-			new Runtime().module(define, name => {
-			if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-1137147d"));
-			return ["focus"].includes(name);
-			});
-		</script>		
+        <!-- ####### STATIC SVGs FOR STREAMERs  ####### -->
 
-		<!-- lirik -->
-		<script type="module">
-			import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-			import define from "https://api.observablehq.com/@vbeohar/lirik-streamer-static-svg-line-chart-for-w210.js?v=3";
-			new Runtime().module(define, name => {
-			if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-d047c6bc"));
-			if (name === "mystyle") return new Inspector(document.querySelector("#observablehq-mystyle-d047c6bc"));
-			});
-		</script>		
+        <script>
+          // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2
+          // Get the modal
+          var modal = document.getElementById("myModal");
+          // Get the button that opens the modal
+          // var btn = document.getElementById("btnradio1");
 
+          // Get the <span> element that closes the modal
+          var span = document.getElementsByClassName("close")[0];
 
-		<!-- ####### STATIC SVGs FOR STREAMERs  ####### -->
+          // When the user clicks the button, open the modal
+          // VB --> I am commenting this piece since I dont want the modal to be called on any other button click, rather, when the refresh button is clicked
+          // and some explicit set of conditions are fulfilled.
+          // btn.onclick = function() {
+          // 	modal.style.display = "block"; ---> so this will be called later
+          // }
 
+          // When the user clicks on <span> (x), close the modal
+          span.onclick = function () {
+            modal.style.display = "none";
+          };
 
-		<script>
+          // When the user clicks anywhere outside of the modal, close it
+          window.onclick = function (event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          };
 
-				// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2
-				// Get the modal
-				var modal = document.getElementById("myModal");
-				// Get the button that opens the modal
-				// var btn = document.getElementById("btnradio1");
+          // ############ ONE MORE ADDITIONAL INTRO MODEL ############ //
+          var intro_modal = document.getElementById("intro_modal");
+          span.onclick = function () {
+            modal.style.display = "none";
+            intro_modal.style.display = "none";
+          };
+          // When the user clicks anywhere outside of the modal, close it
+          window.onclick = function (event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+            if (event.target == intro_modal) {
+              modal.style.display = "none";
+              intro_modal.style.display = "none";
+            }
+          };
+        </script>
 
-				// Get the <span> element that closes the modal
-				var span = document.getElementsByClassName("close")[0];
-
-				// When the user clicks the button, open the modal 
-				// VB --> I am commenting this piece since I dont want the modal to be called on any other button click, rather, when the refresh button is clicked
-				// and some explicit set of conditions are fulfilled.
-				// btn.onclick = function() {
-				// 	modal.style.display = "block"; ---> so this will be called later
-				// }
-
-				// When the user clicks on <span> (x), close the modal
-				span.onclick = function() {
-					modal.style.display = "none";
-				}
-
-				// When the user clicks anywhere outside of the modal, close it
-				window.onclick = function(event) {
-				if (event.target == modal) {
-					modal.style.display = "none";
-				}
-				}
-
-				// ############ ONE MORE ADDITIONAL INTRO MODEL ############ //
-				var intro_modal = document.getElementById("intro_modal");
-				span.onclick = function() {
-					modal.style.display = "none";
-					intro_modal.style.display = "none";
-				}
-				// When the user clicks anywhere outside of the modal, close it
-				window.onclick = function(event) {
-					if (event.target == modal) {
-						modal.style.display = "none";
-					}					
-					if (event.target == intro_modal) {
-						modal.style.display = "none";
-						intro_modal.style.display = "none";
-					}
-				}				
-
-		</script>
-		
-{% endblock javascripts %}
+        {% endblock javascripts %}
+      </div>
+    </div>
+  </div>
+</main>

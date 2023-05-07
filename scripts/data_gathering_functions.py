@@ -1,6 +1,11 @@
 import sqlite3
 import pandas as pd
 import numpy as np
+import plotly
+import plotly.express as px
+import plotly.graph_objects as go
+from flask import Flask, render_template
+import json
 
 #conn = sqlite3.connect(con_string)
 con_string = 'data/db.sqlite3'
@@ -362,7 +367,7 @@ def recommender_engine(channel_name, start_time, sorted_choices):
     """ Queries sql table to get new followers, new subscribers, average viewers,
         average sentiment, and time by category. Runs the recommendation engine and
         outputs results.
-        intput: channel_name, start_time
+        input: channel_name, start_time
         output: recommendation_dict
     """
     channel_name = '\'' + channel_name + '\''
@@ -505,3 +510,62 @@ def recommender_engine(channel_name, start_time, sorted_choices):
         sort_values(by=['Score %'], ascending=False).\
                 to_html(classes='table table-stripped', index=False)
 
+def get_streamer_graph(channel_name):
+    """
+    Query sql table and get the change in subscribers for selected stream
+    input: channel_name, start_time
+    output: subscriber change (int)
+    """
+    
+    # channel_name = 'summit1g'
+    channel_name = '\'' + channel_name + '\''
+    # start_time = '\'' + start_time + '\''
+    
+    conn = sqlite3.connect(con_string)
+    
+    graph_query =  '''
+                    select date, 
+                           avg(general_sentiment) as avg_sentiment,
+                           avg(follower_count) as avg_follower_count,
+                           avg(viewer_count) as avg_viewer_count
+                    from chats
+                    where channel_name = {}
+                           group by date
+                           order by date desc 
+                           LIMIT 100 '''.format(channel_name)
+                            
+    print(graph_query)
+    cursor_obj = conn.cursor()
+    cursor_obj.execute(graph_query)
+    graph_data = cursor_obj.fetchall()
+    #print("Graph data - ",graph_data)
+    graph_df = pd.DataFrame(graph_data, columns=['date', 'avg_sentiment', 'avg_follower_count', 'avg_viewer_count'])
+    conn.commit()
+    conn.close()
+    print(graph_df.head(5))
+    #Create a line chart and bar chart
+    fig = go.Figure()
+    
+    # fig.add_trace(go.Scatter(x=graph_df['date'], y=graph_df['avg_sentiment'],    
+    #                 mode='lines',
+    #                 name='Avg Sentiment'))
+    
+    # fig.add_trace(go.Scatter(x=graph_df['date'], y=graph_df['avg_follower_count'],
+    #                     mode='lines',
+    #                     name='Avg Follower'))
+    
+    fig.add_trace(go.Scatter(x=graph_df['date'], y=graph_df['avg_viewer_count'],
+                        mode='lines',
+                        name='Avg Viewer'))
+    
+    #Display the figures inside card of index.html
+    fig.update_layout(template='plotly_dark',
+                  title_text='Stock Data')
+    # Generate the image
+    img_path = "../app/line_chart.png"
+    fig.write_image(img_path)
+    
+    print("Image generated")
+    return  '<img src="data:image/png;,{}">'.format(img_path)
+    # graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    # return render_template('index.html', graphJSON=graphJSON)

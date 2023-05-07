@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5"
+    />
+    <meta name="author" content="AdminKit" />
+    <meta
+      name="keywords"
+      content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web"
+    />
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-	<meta name="author" content="AdminKit">
-	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+    <link rel="shortcut icon" href="/static/LogoLiveStreamingProject.png" />
 
-	<link rel="shortcut icon" href="/static/LogoLiveStreamingProject.png" />
-
-	<title>
-        <!-- Flask AdminKit - {% block title %}{% endblock %} | AppSeed -->
-		Level Up The Insights - The ultimate dashboard for content creators
+    <title>
+      Level Up The Insights - The ultimate dashboard for content creators
     </title>
 
-	<link href="/static/assets/css/app.css" rel="stylesheet">
-	<link href="/static/assets/css/modal_example_w3schools.css" rel="stylesheet">
+    <link href="/static/assets/css/app.css" rel="stylesheet" />
+    <link
+      href="/static/assets/css/modal_example_w3schools.css"
+      rel="stylesheet"
+    />
 
     <!-- Specific Page CSS goes HERE  -->
     {% block stylesheets %}{% endblock stylesheets %}
-    
-</head>
+  </head>
 
-<body>
+  <body>
+    {% block content %}{% endblock content %} {% include 'includes/scripts.html'
+    %}
 
-	{% block content %}{% endblock content %}
-
-	{% include 'includes/scripts.html' %}
-
-	<!-- Specific Page JS goes HERE  -->
+    <!-- Specific Page JS goes HERE  -->
     {% block javascripts %}{% endblock javascripts %}
-
-</body>
+  </body>
 </html>

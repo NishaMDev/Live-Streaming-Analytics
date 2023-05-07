@@ -179,13 +179,31 @@ class executeSql:
         conn.commit()
         conn.close()      
     
+    def get_streamer_dates(self):
+       
+        
+        conn = sqlite3.connect('../data/db.sqlite3',isolation_level=None)
+        
+        streamer_date_query = '''
+                            select DISTINCT channel_name as STREAMER, stream_date as DATE
+                            from chats
+                            '''
+        print(streamer_date_query)
+        cursor_obj = conn.cursor()
+        cursor_obj.execute(streamer_date_query)
+        message_count = cursor_obj.fetchall()
+        print("message_count", message_count)
+        conn.commit()
+        conn.close() 
+    
     def main(self):
         #self.selectChatTable()     
         #self.getMaxDate()
         #self.selectNewChats()
         #self.copytables()
         #self.selectDateforStreamer()
-        self.get_message_count('summit1g', '2023-04-16')
+        #self.get_message_count('summit1g', '2023-04-16')
+        self.get_streamer_dates()
 
         
 if __name__ == "__main__":
