@@ -195,6 +195,44 @@ class executeSql:
         print("message_count", message_count)
         conn.commit()
         conn.close() 
+        
+        
+    def create_csv(self):
+        path = '../data/processed'
+        channels = ['zackrawrr','lirik','cryocells','katarinafps','gmhikaru','cdawgva','stewie2k','summit1g','tarik']
+        conn = sqlite3.connect('../data/db.sqlite3',isolation_level=None)
+        print("Opened database successfully")
+        for channel in channels:
+            
+            sentiment_score_query = """select date, avg(message_sentiment) as value
+                                   from chats
+                                    where channel_name ='{}'
+                                   group by date
+                                   order by date asc""".format(channel)
+        
+            follower_query = """select date, avg(follower_count) as value
+                                   from chats
+                                    where channel_name ='{}'
+                                   group by date
+                                   order by date asc""".format(channel)
+        
+        
+            viewer_query = """select date, avg(viewer_count) as value
+                                   from chats
+                                    where channel_name ='{}'
+                                   group by date
+                                   order by date asc""".format(channel)
+            
+            sentiment_df = pd.read_sql_query(sentiment_score_query, conn)
+            follower_df = pd.read_sql_query(follower_query, conn)
+            viewer_df = pd.read_sql_query(viewer_query, conn)
+            
+            sentiment_df.to_csv(path + '/sentiment_values_{}.csv'.format(channel))
+            follower_df.to_csv(path + '/follower_values_{}.csv'.format(channel))
+            viewer_df.to_csv(path + '/viewer_values_{}.csv'.format(channel))
+            print("CSV files created successfully")
+                              
+        conn.close()   
     
     def main(self):
         #self.selectChatTable()     
@@ -203,7 +241,8 @@ class executeSql:
         #self.copytables()
         #self.selectDateforStreamer()
         #self.get_message_count('summit1g', '2023-04-16')
-        self.get_streamer_dates()
+        #self.get_streamer_dates()
+        self.create_csv()
 
         
 if __name__ == "__main__":
