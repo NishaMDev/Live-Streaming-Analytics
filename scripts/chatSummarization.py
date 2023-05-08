@@ -14,11 +14,10 @@ class ChatSummarization:
         self.stream_date = stream_date
         
     def readDatabase(self):
-        # channel_name = "cdawgva"
         # Create a SQL connection to our SQLite database
         try:
             conn = sqlite3.connect(dbPath,isolation_level=None)
-
+            
             # Load the data into a DataFrame
             self.chat_df = pd.read_sql_query("SELECT message_text FROM chats WHERE stream_date = ? AND channel_name = ?", conn, params=(self.stream_date, self.channel_name))
 
@@ -31,6 +30,7 @@ class ChatSummarization:
         finally:
             if conn:
                 conn.close()
+        
         
 
     def summarize(self,merged_str):
@@ -53,7 +53,7 @@ class ChatSummarization:
         # get the chunks for the chat messages
         text = ".".join(self.chat_df['message_text'])
         util = Utils()
-        chunks = util.createChunks(2500, text)
+        chunks = util.createChunks(1900, text)
         for chunk in chunks:
             summary_list.append(self.summarize(chunk))
         summary_text = '.'.join(summary_list)
@@ -67,11 +67,26 @@ class ChatSummarization:
         summary_df = pd.DataFrame(data)  
         try:
         # Create your connection.
-            conn = sqlite3.connect(dbPath)
+            conn = sqlite3.connect(dbPath, timeout=10)
             
-            # Write the dataframe to sqlite
-            summary_df.to_sql("chat_summary", conn, if_exists='replace', index=False)
-            print("Dataframe written to sqlite")
+            # Create a cursor
+            cursor = conn.cursor()
+
+            # Check if the table exists
+            table_name = 'chat_summary'
+            cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
+            table_exists = cursor.fetchone()[0] == 1
+
+            # If the table exists, update it
+            if table_exists:
+                # Insert DataFrame into table
+                summary_df.to_sql(table_name, conn, if_exists='append', index=False)
+                print("Dataframe written to existing sqlite table")
+
+            else:
+                # Write the dataframe to sqlite
+                summary_df.to_sql("chat_summary", conn, if_exists='replace', index=False)
+                print("Dataframe written to new sqlite table")
 
             #Commit the change
             conn.commit()
@@ -106,13 +121,12 @@ class ChatSummarization:
 if __name__ == "__main__":
     channel_name = sys.argv[1]
     stream_date = sys.argv[2]
-    print("self.channel_name", channel_name)
     chatSummary = ChatSummarization(channel_name, stream_date)
     chatSummary.readDatabase()
     chatSummary.mergeChat()
     res = chatSummary.getChatSummary()
     print(res)
-  
+    
 
 
 
