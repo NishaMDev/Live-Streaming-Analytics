@@ -74,10 +74,10 @@
 					</div>
 					<h4>
 						<P>
-							The user can choose to see their channel analytics during a livestream or after the stream. The Some of the audience insights and statistics are derived from the Twitch API (i.e., viewers, subs) while others are derived from models built into the systems' backend, like audience sentiment scores (created using a double tuned BERT model) and the topic recommendation algorithm. After pulling chat log data from Twitch's API, the data is run through our fine-tuned BERT model to assign each message a sentiment score and stored in a SQLite database. 
-						</P><BR>
+                            The streamers can choose a channel and date to see their channel’s analytics. Some audience insights and statistics are derived from the Twitch API (i.e., viewers, subs). While others are derived from models built into the systems' backend, like audience sentiment scores, topic recommendations, and chat summaries.
+                        </P><BR>
 						<P>
-							From there, the scores are aggregated by time and by category to feed into the live graphic on the dashboard and the topic recommendation respectively.
+                            The main process starts from accumulating streaming and chat data from Twitch API. Once the data is collected, the next step would be performing data cleaning to remove unwanted noise and make data compatible for further modeling steps. In the third step, these chat messages will be used to perform sentiment analysis and generate sentiment scores using Fine-tuned OpenAI Chat GPT-3 model - text-davinci-003 model. Further a topic recommendation model will use the data aggregated to provide various topics recommendation to the streamer. These recommended topics can be used by the streamer to improve their streaming content.
 						</P><BR><BR><BR>
 					</h4>
 				</div>
@@ -88,7 +88,7 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col mt-0">
-							<h1 class="mt-1 mb-3">NLP Model</h1>
+							<h1 class="mt-1 mb-3">Sentiment Analysis Model</h1>
 						</div>
 						<!-- <div class="col-auto">
 							<div class="stat text-primary">
@@ -99,11 +99,11 @@
 					</div>
 					<h4>
 						<P>
-							Our sentiment scoring model is a combination of a series of fine-tuned Base-BERT models, first trained on a Masked Language Modeling task and then trained on over 5,000 annotated chat log messages downloaded from Twitch. Part of the challenge of training a model for Twitch chat data was in assigning meaning and sentiments to Twitch's emotes. Our approach was to create a nonexhaustive lookup table of Twitch emotes and their meanings that was used to help the model understand how emotes worked. 
+                            OPENAI's GPT-3 is a state-of-the-art natural language processing (NLP) model. OpenAI Completion is an advanced natural language processing (NLP) tool that can generate text based on a given prompt. For sentiment analysis, we used OpenAI Completion to generate text based on a given prompt, which was a sentence on the probability of sentiment. We set the model to "text-davinci-003," the temperature to 0, the max_tokens to 1000, the top_p to 1.0, the frequency_penalty to 0.0, and the presence_penalty to 0.0.
 						</P><BR>
 						<P>
-							Addtionally, the rationale for performing a Masked Language Modeling task as an initial fine-tuning step was to "teach" the BaseBERT model, Twitch specific language. Then the same model was further refined using the 5,000 annotated chats with a multilabel classification task of sentiment analysis. We used PyTorch for fine-tuning tasks. Our final accuracy was over 85%.
-						</P>							
+                            Using these settings, OpenAI Completion was able to generate text based on the given prompt. This text was then used as input to a sentiment analysis model to detect the sentiment of the generated text. This enabled us to gain a better understanding of the sentiment of the given prompt and to improve the accuracy of our sentiment analysis model.
+                        </P>
 					</h4>
 				</div>
 			</div>			
@@ -145,30 +145,30 @@
 	  <div class="col-sm-12">
 		<div class="card">
 			<div class="card-header">
-				<h1 class="mt-1 mb-3">Data Engineering Pipeline</h1>
+				<h1 class="mt-1 mb-3"> Project Pipeline</h1>
 			</div>
 			<div class="card-body py-3">
-				<img class="rounded mr-2 mb-2" src="/static/assets/img/makesense_pipeline.png"/>
+				<img class="rounded mr-2 mb-2" src="/static/assets/img/ProjectArchDiagram.png"/>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-12">
 		<div class="card">
 			<div class="card-header">
-				<h1 class="mt-1 mb-3">Natural Language Processing Model</h1>
+				<h1 class="mt-1 mb-3">Database Model</h1>
 			</div>
 			<div class="card-body py-3">
-				<img class="rounded mr-2 mb-2"  style="width: 700px;" src="/static/assets/img/BERT_model.png"/>
+				<img class="rounded mr-2 mb-2"  style="width: 700px;" src="/static/assets/img/DatabaseModel.png"/>
 			</div>
 		</div>
 	</div>	
 	<div class="col-sm-12">
 		<div class="card">
 			<div class="card-header">
-				<h1 class="mt-1 mb-3">Data Engineering Pipeline - Detailed View</h1>
+				<h1 class="mt-1 mb-3">Project Implementation Overview</h1>
 			</div>
 			<div class="card-body py-3">
-				<img class="rounded mr-2 mb-2"  style="width: 900px;" src="/static/assets/img/in_depth_pipeline.png"/>
+				<img class="rounded mr-2 mb-2"  style="width: 900px;" src="/static/assets/img/overviewImplementation.png"/>
 			</div>
 		</div>
 	</div>	

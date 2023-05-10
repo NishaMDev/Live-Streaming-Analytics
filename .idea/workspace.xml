@@ -2,29 +2,63 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d449c183-2473-450d-952c-4d108974f96e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/static/LogoOfProject.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/assets/img/NishaPic.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/assets/img/karishma_pic.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/loginpagelogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/static/assets/img/DatabaseModel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/static/assets/img/ProjectArchDiagram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/static/assets/img/overviewImplementation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/static/timeline_sentiment_lirik .csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/static/timeline_sentiment_tarik.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/LogoLiveStreamingProject.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/assets/img/KarishmaProfilePhoto.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/assets/img/NishaProfilePhoto.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/accounts/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/accounts/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/accounts/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/accounts/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/includes/sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/includes/sidebar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/assets/img/BERT_model.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/assets/img/in_depth_pipeline.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/assets/img/makesense_pipeline.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/timeline_sentiment_gmhikaru.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/timeline_sentiment_lirik.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/timeline_sentiment_summit1g.csv" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/timeline_sentiment_summit1g.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/layouts/base-fullscreen.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/layouts/base-fullscreen.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/layouts/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/layouts/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/ui-about-us-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/ui-about-us-page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/ui-our-process-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/ui-our-process-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/ui-our-team-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/ui-our-team-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_cdawgva.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_cryocells.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_gmhikaru.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_katarinafps.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_lirik.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_stewie2k.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_summit1g.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_tarik.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_zackrawrr.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_cdawgva.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_cryocells.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_gmhikaru.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_katarinafps.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_lirik.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_stewie2k.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_summit1g.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_tarik.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_zackrawrr.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_cdawgva.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_cryocells.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_gmhikaru.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_katarinafps.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_lirik.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_stewie2k.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_summit1g.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_tarik.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_zackrawrr.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -61,6 +95,9 @@
       <recent name="$PROJECT_DIR$/app/static" />
       <recent name="$PROJECT_DIR$/static" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/scripts" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -73,7 +110,13 @@
       <workItem from="1683495044489" duration="2174000" />
       <workItem from="1683498360339" duration="654000" />
       <workItem from="1683499273145" duration="3371000" />
-      <workItem from="1683564994039" duration="11428000" />
+      <workItem from="1683564994039" duration="13177000" />
+      <workItem from="1683585785276" duration="31000" />
+      <workItem from="1683585927528" duration="469000" />
+      <workItem from="1683586446403" duration="1510000" />
+      <workItem from="1683588151435" duration="1786000" />
+      <workItem from="1683604401629" duration="3476000" />
+      <workItem from="1683660990736" duration="4271000" />
     </task>
     <servers />
   </component>
