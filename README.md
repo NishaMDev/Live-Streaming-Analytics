@@ -1,5 +1,8 @@
 # Live-Streaming-Analytics
 
+![Twitch](https://tenor.com/view/berkaybe-berkaybe__-gif-25733379)
+ 
+ 
 Twitch API tokens are present in json file.
 
 Steps:
