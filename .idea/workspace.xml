@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d449c183-2473-450d-952c-4d108974f96e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/timeline_sentiment_lirik .csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/timeline_sentiment_summit1g.csv" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/timeline_sentiment_summit1g.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/data_gathering_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/data_gathering_functions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +82,10 @@
       <workItem from="1684469115483" duration="673000" />
       <workItem from="1684469824217" duration="827000" />
       <workItem from="1684470665848" duration="327000" />
+      <workItem from="1684526415154" duration="415000" />
+      <workItem from="1684526835301" duration="91000" />
+      <workItem from="1684526929788" duration="111000" />
+      <workItem from="1684527644543" duration="691000" />
     </task>
     <servers />
   </component>
