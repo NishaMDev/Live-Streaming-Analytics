@@ -16,6 +16,3 @@ torch
 torchvision
 torchaudio
 pandas
-sqlite3
-openai
-pandas

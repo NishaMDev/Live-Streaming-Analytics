@@ -495,7 +495,7 @@ def recommender_engine(channel_name, start_time, sorted_choices):
         df = df.fillna(0)
         scores = sorted_choices.split(',')
         # print(scores)
-        df.loc[:, 'Score %'] = [(i*.35 + i*.30 + k*.25 + l*.10)/time for i, j, k, l, time in zip(df[scores[0]], df[scores[1]], df[scores[2]], df[scores[3]], df['time'])]
+        df.loc[:, 'Score %'] = [(i*.35 + i*.30 + k*.25 + l*.10)/1 for i, j, k, l, time in zip(df[scores[0]], df[scores[1]], df[scores[2]], df[scores[3]], df['time'])]
     else:
         df['Score %'] = 100
      
