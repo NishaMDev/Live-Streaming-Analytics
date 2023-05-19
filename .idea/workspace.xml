@@ -2,47 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d449c183-2473-450d-952c-4d108974f96e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/static/assets/img/DatabaseModel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/assets/img/ProjectArchDiagram.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/assets/img/overviewImplementation.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/timeline_sentiment_lirik .csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/timeline_sentiment_tarik.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/assets/img/BERT_model.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/assets/img/in_depth_pipeline.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/assets/img/makesense_pipeline.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/timeline_sentiment_gmhikaru.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/timeline_sentiment_lirik.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/timeline_sentiment_lirik .csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/timeline_sentiment_summit1g.csv" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/timeline_sentiment_summit1g.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/ui-our-process-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/ui-our-process-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_cdawgva.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_cryocells.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_gmhikaru.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_katarinafps.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_lirik.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_stewie2k.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_summit1g.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_tarik.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/follower_values_zackrawrr.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_cdawgva.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_cryocells.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_gmhikaru.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_katarinafps.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_lirik.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_stewie2k.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_summit1g.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_tarik.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/sentiment_values_zackrawrr.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_cdawgva.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_cryocells.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_gmhikaru.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_katarinafps.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_lirik.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_stewie2k.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_summit1g.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_tarik.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/processed/viewer_values_zackrawrr.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/data_gathering_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/data_gathering_functions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,9 +52,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/static/assets/img" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -117,6 +84,9 @@
       <workItem from="1683588151435" duration="1786000" />
       <workItem from="1683604401629" duration="3476000" />
       <workItem from="1683660990736" duration="4271000" />
+      <workItem from="1684469115483" duration="673000" />
+      <workItem from="1684469824217" duration="827000" />
+      <workItem from="1684470665848" duration="327000" />
     </task>
     <servers />
   </component>
