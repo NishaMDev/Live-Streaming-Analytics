@@ -27,3 +27,9 @@ Run chatSummarization.py to read chats from db and perform chat summarization on
 Run topicRecommendation.py to read chats from db and perform topic recommendation on them and load in chat summary table.
 
         python topicRecommendation.py
+        
+To run the web application run below commands:-
+        
+        export FLASK_APP=run.py
+        
+        flask run --host=0.0.0.0 --port=5000
