@@ -13,9 +13,17 @@
 
 <img width="1649" alt="Screenshot 2023-05-23 at 3 39 52 PM" src="https://github.com/NishaMDev/Live-Streaming-Analytics/assets/89233753/0e8a858a-807a-43b8-8489-ae6b0b5ea633">
 
+## Model used:
+
+The twitch chat are summarized by the transformer-based GPT-3 DaVinci model, using input prompts and messages.
+Stream chats tile shows how the underlying fine-tuned **OPENAI's GPT-3** is a state-of-the-art (NLP) model classifies sentiments of ongoing chats.
+
+## Technical Pipeline:
+
+![TechnicalPipeline drawio](https://github.com/NishaMDev/Live-Streaming-Analytics/assets/89233753/204119b2-ffb5-4a9b-b651-f22529ed1518)
 
 
-Steps to run the code:
+## Steps to run the code:
 
 Run the load.py to load chats in sqlite
 
